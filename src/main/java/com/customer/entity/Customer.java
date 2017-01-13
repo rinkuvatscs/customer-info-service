@@ -1,7 +1,7 @@
 package com.customer.entity;
 
 public class Customer {
-	private int custId ;
+//	private int custId ;
 	private String custName;
 	private String custEmail;
 	private String custAadhaar ;
@@ -9,12 +9,12 @@ public class Customer {
 	private String custHomeAddress;
 	
 	
-	public int getCustId() {
+	/*public int getCustId() {
 		return custId;
 	}
 	public void setCustId(int custId) {
 		this.custId = custId;
-	}
+	}*/
 	public String getCustName() {
 		return custName;
 	}
@@ -48,7 +48,7 @@ public class Customer {
 	
 	@Override
 	public String toString() {
-		return "Customer [custId=" + custId + ", custName=" + custName
+		return "Customer [custName=" + custName
 				+ ", custEmail=" + custEmail + ", custAadhaar=" + custAadhaar
 				+ ", custMobile=" + custMobile + ", custHomeAddress="
 				+ custHomeAddress + "]";
