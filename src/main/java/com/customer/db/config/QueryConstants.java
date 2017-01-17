@@ -9,20 +9,17 @@ public interface QueryConstants {
 
 	String IS_CUSTOMER_EXIST = "SELECT * FROM customer WHERE cust_mobile_number = ? OR cust_adhaar_number = ? ";
 
-	String DELETE_DOCTOR = "delete from doctor_detail WHERE doctor_id = ?";
+	String DELETE_CUSTOMER = "delete from customer WHERE cust_id = ?";
 
-	String GET_DOCTOR_BY_ID = " SELECT * FROM doctor_detail WHERE doctor_id = ? ";
+	String GET_CUSTOMER_BY_ID = " SELECT * FROM customer WHERE cust_id = ? ";
 
-	String GET_DOCTOR_BY_ADHAR_NUMBER = " SELECT * FROM doctor_detail WHERE doctor_adhaar_number = ? ";
+	String GET_CUSTOMER_BY_ADHAR_NUMBER = " SELECT * FROM customer WHERE cust_adhaar_number = ? ";
 
-	String GET_DOCTOR_BY_MOBILE_NUMBER = " SELECT * FROM doctor_detail WHERE doctor_number = ? ";
+	String GET_CUSTOMER_BY_MOBILE_NUMBER = " SELECT * FROM customer WHERE cust_mobile_number = ? ";
 
-	String GET_DOCTOR_BY_NAME = " SELECT * FROM doctor_detail WHERE doctor_name LIKE ? ";
+	String GET_CUSTOMER_BY_NAME = " SELECT * FROM customer WHERE cust_name LIKE ? ";
 
-	String GET_DOCTOR_BY_EXPERTISTED = " SELECT * FROM doctor_detail WHERE doctor_expertized = ? ";
-
-	String GET_DOCTOR_BY_CONSULTING_FEE = " SELECT * FROM doctor_detail WHERE onetime_consulting_fee = ? ";
-
+	
 	// -----------------------------------------------------------------------------------------------------------
 
 	

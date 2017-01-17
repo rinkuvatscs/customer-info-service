@@ -2,12 +2,19 @@ package com.customer.request;
 
 public class CustomerRequest {
 
-	
+	private int custId ;
 	private String custName;
 	private String custEmail;
 	private String custAadhaar ;
 	private String custMobile;
-	private String custHomeAddress;	
+	private String custHomeAddress;
+	
+	public int getCustId() {
+		return custId;
+	}
+	public void setCustId(int custId) {
+		this.custId = custId;
+	}
 	
 	public String getCustName() {
 		return custName;

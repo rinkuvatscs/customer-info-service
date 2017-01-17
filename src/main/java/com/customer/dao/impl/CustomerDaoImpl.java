@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 import com.customer.dao.CustomerDao;
 import com.customer.db.config.QueryConstants;
 import com.customer.entity.Customer;
+import com.customer.exceptionhandler.BadRequestException;
 import com.customer.extractor.CustomerExtractor;
 import com.customer.request.CustomerRequest;
 
@@ -68,5 +69,107 @@ public class CustomerDaoImpl implements CustomerDao {
 		}
 		return isExist;
 	}
+
+	@Override
+	public String deleteCustomer(CustomerRequest customerRequest) {
+
+		String response = null;
+		int delete;
+		if (!StringUtils.isEmpty(customerRequest)) {
+			if (!StringUtils.isEmpty(customerRequest.getCustId())
+					&& getCustomerById(customerRequest.getCustId()) != null) {
+				Object args[] = { customerRequest.getCustId() };
+				delete = jdbcTemplate.update(
+						"DELETE FROM customer WHERE cust_id = ? ", args);
+				if (delete > 0) {
+					response = "Customer with Customer ID " + customerRequest.getCustId()
+							+ " successfully Deleted";
+				} else {
+					response = "Please try again later";
+				}
+			} else if (!StringUtils.isEmpty(customerRequest.getCustAadhaar())
+					&& getCustomerByAdharNumber(customerRequest.getCustAadhaar()) != null) {
+				Object args[] = { customerRequest.getCustAadhaar() };
+				delete = jdbcTemplate
+						.update("DELETE FROM customer WHERE cust_adhaar_number = ? ",
+								args);
+				if (delete > 0) {
+					response = "Customer with Aadhar Number "
+							+ customerRequest.getCustAadhaar()
+							+ " successfully Deleted";
+				} else {
+					response = "Please try again later";
+				}
+			} else if (!StringUtils.isEmpty(customerRequest.getCustMobile())
+					&& getCustomerByMobileNumber(customerRequest.getCustMobile()) != null) {
+				Object args[] = { customerRequest.getCustMobile() };
+				delete = jdbcTemplate.update(
+						"DELETE FROM customer WHERE cust_mobile_number = ? ",
+						args);
+				if (delete > 0) {
+					response = "Customer with Mobile Number "
+							+ customerRequest.getCustMobile()
+							+ " successfully Deleted";
+				} else {
+					response = "Please try again later";
+				}
+			} else {
+				throw new BadRequestException(
+						"Please provide valid Customer Id or Customer Adhar Number or Customer Mobile Number.");
+			}
+		} else {
+			throw new BadRequestException(
+					"Customer can not be deleted without details");
+
+		}
+		return response;
+	}
+
+	
+	@Override
+	public Customer getCustomerById(Integer id) {
+
+		if (!StringUtils.isEmpty(id)) {
+			Object args[] = { id };
+			List<Customer> response = jdbcTemplate.query(
+					QueryConstants.GET_CUSTOMER_BY_ID, args,
+					new CustomerExtractor());
+			if (!StringUtils.isEmpty(response) && response.size() > 0) {
+				return response.get(0);
+			}
+		}
+		return new Customer();
+	}
+
+	@Override
+	public Customer getCustomerByAdharNumber(String adharNumber) {
+
+		if (!StringUtils.isEmpty(adharNumber)) {
+			Object args[] = { adharNumber };
+			List<Customer> response = jdbcTemplate.query(
+					QueryConstants.GET_CUSTOMER_BY_ADHAR_NUMBER,
+					new CustomerExtractor(), args);
+			if (!StringUtils.isEmpty(response) && response.size() > 0) {
+				return response.get(0);
+			}
+		}
+		return new Customer();
+	}
+
+	@Override
+	public Customer getCustomerByMobileNumber(String mobileNumber) {
+
+		if (!StringUtils.isEmpty(mobileNumber)) {
+			Object args[] = { mobileNumber };
+			List<Customer> response = jdbcTemplate.query(
+					QueryConstants.GET_CUSTOMER_BY_MOBILE_NUMBER,
+					new CustomerExtractor(), args);
+			if (!StringUtils.isEmpty(response) && response.size() > 0) {
+				return response.get(0);
+			}
+		}
+		return new Customer();
+	}
+
 
 }

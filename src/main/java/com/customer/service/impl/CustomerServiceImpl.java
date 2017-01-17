@@ -18,4 +18,10 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerDao.addCustomer(customerRequest);
 	}
 
+	@Override
+	public String deleteCustomer(CustomerRequest customerRequest) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
