@@ -19,157 +19,218 @@ import com.customer.request.CustomerRequest;
 
 @Repository
 public class CustomerDaoImpl implements CustomerDao {
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
-	@Override
-	public String addCustomer(CustomerRequest customer) {
-		String response = null;
-		//(cust_name,cust_mobile_number,cust_home_address,cust_adhaar_number,"
-		//+ "cust_mail,date_of_registered)
-		if (!isCustomerExists(customer)) {
+    @Override
+    public String addCustomer(CustomerRequest customer) {
+        String response = null;
+        // (cust_name,cust_mobile_number,cust_home_address,cust_adhaar_number,"
+        // + "cust_mail,date_of_registered)
+        if (!isCustomerExists(customer)) {
 
-			List<Object> args = new ArrayList<>();
-			args.add(customer.getCustName());
-			args.add(customer.getCustMobile());
-			args.add(customer.getCustHomeAddress());
-			args.add(customer.getCustAadhaar());
-			args.add(customer.getCustEmail());
-			LocalDate localDate = LocalDate.now();
-	        System.out.println("curr date="+DateTimeFormatter.ofPattern("yyyy/MM/dd").format(localDate));
-			args.add(DateTimeFormatter.ofPattern("yyyy/MM/dd").format(localDate));
+            List<Object> args = new ArrayList<>();
+            args.add(customer.getCustName());
+            args.add(customer.getCustMobile());
+            args.add(customer.getCustHomeAddress());
+            args.add(customer.getCustAadhaar());
+            args.add(customer.getCustEmail());
+            LocalDate localDate = LocalDate.now();
+            System.out.println("curr date="
+                    + DateTimeFormatter.ofPattern("yyyy/MM/dd").format(
+                            localDate));
+            args.add(DateTimeFormatter.ofPattern("yyyy/MM/dd")
+                    .format(localDate));
 
-			int row = jdbcTemplate.update(QueryConstants.ADD_CUSTOMER,
-					args.toArray());
-			if (row == 1) {
-				response = customer.getCustName() + " registered successfully";
-			} else {
-				response = "Sorry, " + customer.getCustName()
-						+ " not registered . Please try again";
-			}
-		} else {
-			response = "Sorry, " + customer.getCustName()
-					+ " already registered";
-		}
+            int row = jdbcTemplate.update(QueryConstants.ADD_CUSTOMER,
+                    args.toArray());
+            if (row == 1) {
+                response = customer.getCustName() + " registered successfully";
+            } else {
+                response = "Sorry, " + customer.getCustName()
+                        + " not registered . Please try again";
+            }
+        } else {
+            response = "Sorry, " + customer.getCustName()
+                    + " already registered";
+        }
 
-		return response;
-	}
+        return response;
+    }
 
-	private boolean isCustomerExists(CustomerRequest customer) {
+    private boolean isCustomerExists(CustomerRequest customer) {
 
-		boolean isExist = false;
-		List<String> args = new ArrayList<>();
-		args.add(customer.getCustMobile());
-		args.add(customer.getCustAadhaar());
-		List<Customer> response = jdbcTemplate.query(
-				QueryConstants.IS_CUSTOMER_EXIST, new CustomerExtractor(),
-				args.toArray());
-		if (!StringUtils.isEmpty(response) && response.size() > 0) {
-			isExist = true;
-		}
-		return isExist;
-	}
+        boolean isExist = false;
+        List<String> args = new ArrayList<>();
+        args.add(customer.getCustMobile());
+        args.add(customer.getCustAadhaar());
+        List<Customer> response = jdbcTemplate.query(
+                QueryConstants.IS_CUSTOMER_EXIST, new CustomerExtractor(),
+                args.toArray());
+        if (!StringUtils.isEmpty(response) && response.size() > 0) {
+            isExist = true;
+        }
+        return isExist;
+    }
 
-	@Override
-	public String deleteCustomer(CustomerRequest customerRequest) {
+    @Override
+    public String deleteCustomer(CustomerRequest customerRequest) {
 
-		String response = null;
-		int delete;
-		if (!StringUtils.isEmpty(customerRequest)) {
-			if (!StringUtils.isEmpty(customerRequest.getCustId())
-					&& getCustomerById(customerRequest.getCustId()) != null) {
-				Object args[] = { customerRequest.getCustId() };
-				delete = jdbcTemplate.update(
-						"DELETE FROM customer WHERE cust_id = ? ", args);
-				if (delete > 0) {
-					response = "Customer with Customer ID " + customerRequest.getCustId()
-							+ " successfully Deleted";
-				} else {
-					response = "Please try again later";
-				}
-			} else if (!StringUtils.isEmpty(customerRequest.getCustAadhaar())
-					&& getCustomerByAdharNumber(customerRequest.getCustAadhaar()) != null) {
-				Object args[] = { customerRequest.getCustAadhaar() };
-				delete = jdbcTemplate
-						.update("DELETE FROM customer WHERE cust_adhaar_number = ? ",
-								args);
-				if (delete > 0) {
-					response = "Customer with Aadhar Number "
-							+ customerRequest.getCustAadhaar()
-							+ " successfully Deleted";
-				} else {
-					response = "Please try again later";
-				}
-			} else if (!StringUtils.isEmpty(customerRequest.getCustMobile())
-					&& getCustomerByMobileNumber(customerRequest.getCustMobile()) != null) {
-				Object args[] = { customerRequest.getCustMobile() };
-				delete = jdbcTemplate.update(
-						"DELETE FROM customer WHERE cust_mobile_number = ? ",
-						args);
-				if (delete > 0) {
-					response = "Customer with Mobile Number "
-							+ customerRequest.getCustMobile()
-							+ " successfully Deleted";
-				} else {
-					response = "Please try again later";
-				}
-			} else {
-				throw new BadRequestException(
-						"Please provide valid Customer Id or Customer Adhar Number or Customer Mobile Number.");
-			}
-		} else {
-			throw new BadRequestException(
-					"Customer can not be deleted without details");
+        String response = null;
+        int delete;
+        if (!StringUtils.isEmpty(customerRequest)) {
+            if (!StringUtils.isEmpty(customerRequest.getCustId())
+                    && getCustomerById(customerRequest.getCustId()) != null) {
+                Object args[] = { customerRequest.getCustId() };
+                delete = jdbcTemplate.update(
+                        "DELETE FROM customer WHERE cust_id = ? ", args);
+                if (delete > 0) {
+                    response = "Customer with Customer ID "
+                            + customerRequest.getCustId()
+                            + " successfully Deleted";
+                } else {
+                    response = "Please try again later";
+                }
+            } else if (!StringUtils.isEmpty(customerRequest.getCustAadhaar())
+                    && getCustomerByAdharNumber(customerRequest
+                            .getCustAadhaar()) != null) {
+                Object args[] = { customerRequest.getCustAadhaar() };
+                delete = jdbcTemplate.update(
+                        "DELETE FROM customer WHERE cust_adhaar_number = ? ",
+                        args);
+                if (delete > 0) {
+                    response = "Customer with Aadhar Number "
+                            + customerRequest.getCustAadhaar()
+                            + " successfully Deleted";
+                } else {
+                    response = "Please try again later";
+                }
+            } else if (!StringUtils.isEmpty(customerRequest.getCustMobile())
+                    && getCustomerByMobileNumber(customerRequest
+                            .getCustMobile()) != null) {
+                Object args[] = { customerRequest.getCustMobile() };
+                delete = jdbcTemplate.update(
+                        "DELETE FROM customer WHERE cust_mobile_number = ? ",
+                        args);
+                if (delete > 0) {
+                    response = "Customer with Mobile Number "
+                            + customerRequest.getCustMobile()
+                            + " successfully Deleted";
+                } else {
+                    response = "Please try again later";
+                }
+            } else {
+                throw new BadRequestException(
+                        "Please provide valid Customer Id or Customer Adhar Number or Customer Mobile Number.");
+            }
+        } else {
+            throw new BadRequestException(
+                    "Customer can not be deleted without details");
 
-		}
-		return response;
-	}
+        }
+        return response;
+    }
 
-	
-	@Override
-	public Customer getCustomerById(Integer id) {
+    @Override
+    public Customer getCustomerById(Integer id) {
 
-		if (!StringUtils.isEmpty(id)) {
-			Object args[] = { id };
-			List<Customer> response = jdbcTemplate.query(
-					QueryConstants.GET_CUSTOMER_BY_ID, args,
-					new CustomerExtractor());
-			if (!StringUtils.isEmpty(response) && response.size() > 0) {
-				return response.get(0);
-			}
-		}
-		return new Customer();
-	}
+        if (!StringUtils.isEmpty(id)) {
+            Object args[] = { id };
+            List<Customer> response = jdbcTemplate.query(
+                    QueryConstants.GET_CUSTOMER_BY_ID, args,
+                    new CustomerExtractor());
+            if (!StringUtils.isEmpty(response) && response.size() > 0) {
+                return response.get(0);
+            }
+        }
+        return new Customer();
+    }
 
-	@Override
-	public Customer getCustomerByAdharNumber(String adharNumber) {
+    @Override
+    public Customer getCustomerByAdharNumber(String adharNumber) {
 
-		if (!StringUtils.isEmpty(adharNumber)) {
-			Object args[] = { adharNumber };
-			List<Customer> response = jdbcTemplate.query(
-					QueryConstants.GET_CUSTOMER_BY_ADHAR_NUMBER,
-					new CustomerExtractor(), args);
-			if (!StringUtils.isEmpty(response) && response.size() > 0) {
-				return response.get(0);
-			}
-		}
-		return new Customer();
-	}
+        if (!StringUtils.isEmpty(adharNumber)) {
+            Object args[] = { adharNumber };
+            List<Customer> response = jdbcTemplate.query(
+                    QueryConstants.GET_CUSTOMER_BY_ADHAR_NUMBER,
+                    new CustomerExtractor(), args);
+            if (!StringUtils.isEmpty(response) && response.size() > 0) {
+                return response.get(0);
+            }
+        }
+        return new Customer();
+    }
 
-	@Override
-	public Customer getCustomerByMobileNumber(String mobileNumber) {
+    @Override
+    public Customer getCustomerByMobileNumber(String mobileNumber) {
 
-		if (!StringUtils.isEmpty(mobileNumber)) {
-			Object args[] = { mobileNumber };
-			List<Customer> response = jdbcTemplate.query(
-					QueryConstants.GET_CUSTOMER_BY_MOBILE_NUMBER,
-					new CustomerExtractor(), args);
-			if (!StringUtils.isEmpty(response) && response.size() > 0) {
-				return response.get(0);
-			}
-		}
-		return new Customer();
-	}
+        if (!StringUtils.isEmpty(mobileNumber)) {
+            Object args[] = { mobileNumber };
+            List<Customer> response = jdbcTemplate.query(
+                    QueryConstants.GET_CUSTOMER_BY_MOBILE_NUMBER,
+                    new CustomerExtractor(), args);
+            if (!StringUtils.isEmpty(response) && response.size() > 0) {
+                return response.get(0);
+            }
+        }
+        return new Customer();
+    }
 
+    @Override
+    public String updateDoctor(CustomerRequest customerRequest) {
 
+        String response = null;
+        List<Object> args = new ArrayList<>();
+        StringBuilder query = new StringBuilder(" UPDATE customer SET ");
+        if (!StringUtils.isEmpty(customerRequest)) {
+            if (isCustomerExists(customerRequest)) {
+                boolean isCustomerName = false, isHomeAddress = false;
+                if (null != customerRequest.getCustName()) {
+                    query.append(" cust_name = ? ");
+                    args.add(customerRequest.getCustName());
+                    isCustomerName = true;
+                }
+                if (null != customerRequest.getCustHomeAddress()) {
+                    if (isCustomerName) {
+                        query.append(" , cust_home_address = ? ");
+                        args.add(customerRequest.getCustHomeAddress());
+                    } else {
+                        query.append(" cust_home_address = ? ");
+                        args.add(customerRequest.getCustHomeAddress());
+                    }
+                    isHomeAddress = true;
+                }
+
+                if (isCustomerName || isHomeAddress) {
+                    if (null != customerRequest.getCustMobile()) {
+                        query.append(" WHERE cust_mobile_number = ? ");
+                        args.add(customerRequest.getCustMobile());
+                    } else if (null != customerRequest.getCustAadhaar()) {
+                        query.append(" WHERE cust_adhaar_number = ? ");
+                        args.add(customerRequest.getCustAadhaar());
+                    } else if (null != customerRequest.getCustId()) {
+                        query.append(" WHERE cust_id = ? ");
+                        args.add(customerRequest.getCustId());
+                    } else {
+                        response = "Please Enter data to Update....!!!";
+                    }
+                }
+                if (StringUtils.isEmpty(response)) {
+                    int update = jdbcTemplate.update(query.toString(),
+                            args.toArray());
+                    if (update > 0) {
+                        response = "Customer successfully Updated...!!!";
+                    } else {
+                        response = "There is some problem, please try again later...!!!";
+                    }
+                }
+            } else {
+                response = "Customer does not exist...!!!";
+            }
+        } else {
+            response = "Customer details are Empty, provide some details to update....!!!";
+        }
+
+        return response;
+    }
 }
