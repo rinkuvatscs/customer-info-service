@@ -80,7 +80,7 @@ public class CustomerDaoImpl implements CustomerDao {
         int delete;
         if (!StringUtils.isEmpty(customerRequest)) {
             if (!StringUtils.isEmpty(customerRequest.getCustId())
-                    && getCustomerById(customerRequest.getCustId()) != null) {
+                    && getCustomerById(customerRequest.getCustId()).getCustId() != null) {
                 Object args[] = { customerRequest.getCustId() };
                 delete = jdbcTemplate.update(
                         "DELETE FROM customer WHERE cust_id = ? ", args);
@@ -93,7 +93,7 @@ public class CustomerDaoImpl implements CustomerDao {
                 }
             } else if (!StringUtils.isEmpty(customerRequest.getCustAadhaar())
                     && getCustomerByAdharNumber(customerRequest
-                            .getCustAadhaar()) != null) {
+                            .getCustAadhaar()).getCustAadhaar() != null) {
                 Object args[] = { customerRequest.getCustAadhaar() };
                 delete = jdbcTemplate.update(
                         "DELETE FROM customer WHERE cust_adhaar_number = ? ",
@@ -107,7 +107,7 @@ public class CustomerDaoImpl implements CustomerDao {
                 }
             } else if (!StringUtils.isEmpty(customerRequest.getCustMobile())
                     && getCustomerByMobileNumber(customerRequest
-                            .getCustMobile()) != null) {
+                            .getCustMobile()).getCustMobile() != null) {
                 Object args[] = { customerRequest.getCustMobile() };
                 delete = jdbcTemplate.update(
                         "DELETE FROM customer WHERE cust_mobile_number = ? ",
@@ -128,6 +128,7 @@ public class CustomerDaoImpl implements CustomerDao {
                     "Customer can not be deleted without details");
 
         }
+        response="Customer Does Not Exist";
         return response;
     }
 

@@ -26,6 +26,7 @@ import com.customer.service.CustomerService;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/customer")
 @Api(basePath = "/customer", value = "customermanagement", description = "Operations with Landlords", produces = "application/json")
 public class CustomerController {
 
@@ -112,11 +113,11 @@ public class CustomerController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/updatedoctor", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "update doctor", notes = "update doctor")
+    @ApiOperation(value = "update customer", notes = "update customer")
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = "Fields are with validation errors"),
             @ApiResponse(code = 201, message = "") })
-    public CustomerResponse updateDoctor(
+    public CustomerResponse updateCustomer(
             @RequestBody CustomerRequest customerRequest) {
 
         return new CustomerResponse(
@@ -125,7 +126,7 @@ public class CustomerController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String welcome() {
-        return "Welcome to Doctor Management Tool";
+        return "Welcome to Customer Management Tool";
     }
 
 }

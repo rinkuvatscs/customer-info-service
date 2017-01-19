@@ -35,6 +35,7 @@ public class CustomerExtractor implements ResultSetExtractor<List<Customer>> {
 		// CHARSET=latin1;
 		while (rs.next()) {
 			customer = new Customer();
+			customer.setCustId(rs.getInt("cust_id"));
 			customer.setCustAadhaar(rs.getString("cust_adhaar_number"));
 			customer.setCustHomeAddress(rs.getString("cust_home_address"));
 			customer.setCustName(rs.getString("cust_name"));
