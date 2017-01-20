@@ -111,7 +111,7 @@ public class CustomerController {
                     "Customer Mobile Number should not be blank");
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/updatedoctor", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.PUT, value = "/updatecustomer", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "update customer", notes = "update customer")
     @ApiResponses(value = {
@@ -121,7 +121,7 @@ public class CustomerController {
             @RequestBody CustomerRequest customerRequest) {
 
         return new CustomerResponse(
-                customerService.updateDoctor(customerRequest));
+                customerService.updateCustomer(customerRequest));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/")

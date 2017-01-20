@@ -9,7 +9,7 @@ public interface CustomerService {
     public String deleteCustomer(CustomerRequest customerRequest);
 
     public Customer getCustomerByAdharNumber(String adharNumber);
-
-    public String updateDoctor(CustomerRequest customerRequest);
+    
+	public String updateCustomer(CustomerRequest customerRequest);
 
 }

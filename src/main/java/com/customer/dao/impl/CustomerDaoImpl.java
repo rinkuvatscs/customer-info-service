@@ -128,7 +128,6 @@ public class CustomerDaoImpl implements CustomerDao {
                     "Customer can not be deleted without details");
 
         }
-        response="Customer Does Not Exist";
         return response;
     }
 
@@ -178,14 +177,14 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public String updateDoctor(CustomerRequest customerRequest) {
+    public String updateCustomer(CustomerRequest customerRequest) {
 
         String response = null;
         List<Object> args = new ArrayList<>();
         StringBuilder query = new StringBuilder(" UPDATE customer SET ");
         if (!StringUtils.isEmpty(customerRequest)) {
             if (isCustomerExists(customerRequest)) {
-                boolean isCustomerName = false, isHomeAddress = false;
+                boolean isCustomerName = false, isHomeAddress = false,isCustEmail = false;
                 if (null != customerRequest.getCustName()) {
                     query.append(" cust_name = ? ");
                     args.add(customerRequest.getCustName());
@@ -196,13 +195,25 @@ public class CustomerDaoImpl implements CustomerDao {
                         query.append(" , cust_home_address = ? ");
                         args.add(customerRequest.getCustHomeAddress());
                     } else {
-                        query.append(" cust_home_address = ? ");
+                        query.append(" cust_home_add"
+                        		+ "ress = ? ");
                         args.add(customerRequest.getCustHomeAddress());
                     }
                     isHomeAddress = true;
                 }
+                if (null != customerRequest.getCustEmail()) {
+                    if (isHomeAddress||isCustomerName) {
+                        query.append(" , cust_mail = ? ");
+                        args.add(customerRequest.getCustEmail());
+                    } else {
+                        query.append(" cust_mail = ?");
+                        args.add(customerRequest.getCustEmail());
+                    }
+                    isCustEmail = true;
+                }
 
-                if (isCustomerName || isHomeAddress) {
+
+                if (isCustomerName || isHomeAddress || isCustEmail) {
                     if (null != customerRequest.getCustMobile()) {
                         query.append(" WHERE cust_mobile_number = ? ");
                         args.add(customerRequest.getCustMobile());

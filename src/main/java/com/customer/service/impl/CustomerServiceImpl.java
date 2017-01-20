@@ -33,9 +33,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public String updateDoctor(CustomerRequest customerRequest) {
+    public String updateCustomer(CustomerRequest customerRequest) {
         // TODO Auto-generated method stub
-        return customerDao.updateDoctor(customerRequest);
+        return customerDao.updateCustomer(customerRequest);
     }
 
 }

@@ -14,6 +14,6 @@ public interface CustomerDao {
 
     public Customer getCustomerById(Integer id);
 
-    public String updateDoctor(CustomerRequest customerRequest);
+    public String updateCustomer(CustomerRequest customerRequest);
 
 }
