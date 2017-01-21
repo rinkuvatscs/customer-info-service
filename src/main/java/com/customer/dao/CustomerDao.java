@@ -1,5 +1,7 @@
 package com.customer.dao;
 
+import java.util.List;
+
 import com.customer.entity.Customer;
 import com.customer.request.CustomerRequest;
 
@@ -11,6 +13,10 @@ public interface CustomerDao {
     public Customer getCustomerByMobileNumber(String mobileNumber);
 
     public Customer getCustomerByAdharNumber(String adharNumber);
+    
+    public Customer getCustomerByEmail(String email);
+    
+    public List<Customer> getCustomerByName(String name);
 
     public Customer getCustomerById(Integer id);
 

@@ -14,6 +14,8 @@ public interface QueryConstants {
 	String GET_CUSTOMER_BY_ID = " SELECT * FROM customer WHERE cust_id = ? ";
 
 	String GET_CUSTOMER_BY_ADHAR_NUMBER = " SELECT * FROM customer WHERE cust_adhaar_number = ? ";
+	
+	String GET_CUSTOMER_BY_EMAIL = " SELECT * FROM customer WHERE cust_mail = ? ";
 
 	String GET_CUSTOMER_BY_MOBILE_NUMBER = " SELECT * FROM customer WHERE cust_mobile_number = ? ";
 
