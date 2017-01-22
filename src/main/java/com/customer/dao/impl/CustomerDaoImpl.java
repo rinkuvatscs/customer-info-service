@@ -65,12 +65,41 @@ public class CustomerDaoImpl implements CustomerDao {
 	private boolean isCustomerExists(CustomerRequest customer) {
 
 		boolean isExist = false;
+
+		boolean isAadharExists = false, isEmailExists = false;
+
+		StringBuffer query = new StringBuffer(QueryConstants.IS_CUSTOMER_EXIST);
 		List<String> args = new ArrayList<>();
-		args.add(customer.getCustMobile());
-		args.add(customer.getCustAadhaar());
-		List<Customer> response = jdbcTemplate.query(
-				QueryConstants.IS_CUSTOMER_EXIST, new CustomerExtractor(),
-				args.toArray());
+
+		if (!StringUtils.isEmpty(customer.getCustAadhaar())) {
+			query.append(" where cust_adhaar_number = ?");
+			args.add(customer.getCustAadhaar());
+			isAadharExists = true;
+		}
+
+		if (!StringUtils.isEmpty(customer.getCustEmail())) {
+
+			if (isAadharExists) {
+				query.append(" or cust_mail = ?");
+			} else {
+				query.append(" where cust_mail = ?");
+			}
+			isEmailExists = true;
+			args.add(customer.getCustEmail());
+		}
+
+		if (!StringUtils.isEmpty(customer.getCustMobile())) {
+
+			if (isAadharExists || isEmailExists) {
+				query.append(" or cust_mobile_number = ?");
+			} else {
+				query.append(" where cust_mobile_number = ?");
+			}
+			args.add(customer.getCustMobile());
+		}
+
+		List<Customer> response = jdbcTemplate.query(query.toString(),
+				new CustomerExtractor(), args.toArray());
 		if (!StringUtils.isEmpty(response) && response.size() > 0) {
 			isExist = true;
 		}
@@ -173,7 +202,7 @@ public class CustomerDaoImpl implements CustomerDao {
 			Object args[] = { mobileNumber };
 			List<Customer> response = jdbcTemplate.query(
 					QueryConstants.GET_CUSTOMER_BY_MOBILE_NUMBER,
-	
+
 					new CustomerExtractor(), args);
 			if (!StringUtils.isEmpty(response) && response.size() > 0) {
 				return response.get(0);
@@ -183,13 +212,25 @@ public class CustomerDaoImpl implements CustomerDao {
 	}
 
 	@Override
+	public boolean isCustomerIdExists(Integer custId) {
+		boolean isCustomerExists = false;
+
+		if (!StringUtils.isEmpty(getCustomerById(custId).getCustAadhaar())) {
+			isCustomerExists = true;
+		}
+		return isCustomerExists;
+	}
+
+	@Override
 	public String updateCustomer(CustomerRequest customerRequest) {
 
 		String response = null;
 		List<Object> args = new ArrayList<>();
 		StringBuilder query = new StringBuilder(" UPDATE customer SET ");
 		if (!StringUtils.isEmpty(customerRequest)) {
-			if (isCustomerExists(customerRequest)) {
+
+			// Will check only using CustId Here
+			if (isCustomerIdExists(customerRequest.getCustId())) {
 				boolean isCustomerName = false, isHomeAddress = false, isCustEmail = false;
 				if (null != customerRequest.getCustName()) {
 					query.append(" cust_name = ? ");
@@ -199,32 +240,41 @@ public class CustomerDaoImpl implements CustomerDao {
 				if (null != customerRequest.getCustHomeAddress()) {
 					if (isCustomerName) {
 						query.append(" , cust_home_address = ? ");
-						args.add(customerRequest.getCustHomeAddress());
 					} else {
-						query.append(" cust_home_add" + "ress = ? ");
-						args.add(customerRequest.getCustHomeAddress());
+						query.append(" cust_home_address = ? ");
 					}
+					args.add(customerRequest.getCustHomeAddress());
 					isHomeAddress = true;
 				}
 				if (null != customerRequest.getCustEmail()) {
 					if (isHomeAddress || isCustomerName) {
 						query.append(" , cust_mail = ? ");
-						args.add(customerRequest.getCustEmail());
 					} else {
 						query.append(" cust_mail = ?");
-						args.add(customerRequest.getCustEmail());
 					}
+					args.add(customerRequest.getCustEmail());
 					isCustEmail = true;
 				}
 
+				if (null != customerRequest.getCustMobile()) {
+
+					if (null == getCustomerByMobileNumber(
+							customerRequest.getCustMobile()).getCustAadhaar()) {
+						if (isHomeAddress || isCustomerName || isCustEmail) {
+							query.append(" , cust_mobile_number = ? ");
+
+						} else {
+							query.append(" cust_mobile_number = ?");
+						}
+						args.add(customerRequest.getCustEmail());
+					} else {
+						throw new BadRequestException(
+								"Updated Mobile Number already in Use Choose Forget Password option");
+					}
+				}
+
 				if (isCustomerName || isHomeAddress || isCustEmail) {
-					if (null != customerRequest.getCustMobile()) {
-						query.append(" WHERE cust_mobile_number = ? ");
-						args.add(customerRequest.getCustMobile());
-					} else if (null != customerRequest.getCustAadhaar()) {
-						query.append(" WHERE cust_adhaar_number = ? ");
-						args.add(customerRequest.getCustAadhaar());
-					} else if (null != customerRequest.getCustId()) {
+					if (null != customerRequest.getCustId()) {
 						query.append(" WHERE cust_id = ? ");
 						args.add(customerRequest.getCustId());
 					} else {

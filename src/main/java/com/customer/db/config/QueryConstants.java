@@ -7,7 +7,9 @@ public interface QueryConstants {
 			+ " values"
 			+ "(?,?,?,?,?,?)";
 
-	String IS_CUSTOMER_EXIST = "SELECT * FROM customer WHERE cust_mobile_number = ? OR cust_adhaar_number = ? ";
+	String IS_CUSTOMER_EXIST = "SELECT * FROM customer";
+	
+	//WHERE cust_mobile_number = ? OR cust_adhaar_number = ? ";
 
 	String DELETE_CUSTOMER = "delete from customer WHERE cust_id = ?";
 

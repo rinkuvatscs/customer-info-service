@@ -21,5 +21,7 @@ public interface CustomerDao {
     public Customer getCustomerById(Integer id);
 
     public String updateCustomer(CustomerRequest customerRequest);
+    
+    boolean isCustomerIdExists(Integer custId);
 
 }

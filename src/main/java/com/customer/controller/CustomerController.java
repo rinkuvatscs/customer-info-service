@@ -82,9 +82,16 @@ public class CustomerController {
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getCustomerById/{custId}")
 	@ResponseBody
-	public Customer getCustomerByCustomerId(@PathVariable Integer custId) {
+	public Customer getCustomerByCustomerId(@PathVariable String custId) {
 		if (!StringUtils.isEmpty(custId)) {
-			return customerService.getCustomerByCustomerId(custId);
+			Integer customerId = 0;
+			try {
+				customerId = Integer.parseInt(custId);
+			} catch (NumberFormatException numberFormatException) {
+				throw new BadRequestException(
+						"Customer ID should not be Alpanumeric. It Should be Number only");
+			}
+			return customerService.getCustomerByCustomerId(customerId);
 		} else {
 			throw new BadRequestException("Customer ID should not be blank");
 		}
