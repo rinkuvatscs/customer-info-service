@@ -212,16 +212,6 @@ public class CustomerDaoImpl implements CustomerDao {
 	}
 
 	@Override
-	public boolean isCustomerIdExists(Integer custId) {
-		boolean isCustomerExists = false;
-
-		if (!StringUtils.isEmpty(getCustomerById(custId).getCustAadhaar())) {
-			isCustomerExists = true;
-		}
-		return isCustomerExists;
-	}
-
-	@Override
 	public String updateCustomer(CustomerRequest customerRequest) {
 
 		String response = null;
@@ -230,7 +220,8 @@ public class CustomerDaoImpl implements CustomerDao {
 		if (!StringUtils.isEmpty(customerRequest)) {
 
 			// Will check only using CustId Here
-			if (isCustomerIdExists(customerRequest.getCustId())) {
+			if (null != getCustomerById(customerRequest.getCustId())
+					.getCustAadhaar()) {
 				boolean isCustomerName = false, isHomeAddress = false, isCustEmail = false;
 				if (null != customerRequest.getCustName()) {
 					query.append(" cust_name = ? ");
