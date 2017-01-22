@@ -51,14 +51,14 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer getCustomerByEmail(String email) {
+	public List<Customer> getCustomerByEmail(String email) {
 		return customerDao.getCustomerByEmail(email);
 	}
 
 	@Override
 	public List<Customer> getCustomerByName(String name) {
 		// TODO Auto-generated method stub
-		return null;
+		return customerDao.getCustomerByName(name);
 	}
 
 }

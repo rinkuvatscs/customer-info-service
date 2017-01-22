@@ -14,7 +14,7 @@ public interface CustomerService {
     
     public Customer getCustomerByMobile(String mobile);
     
-    public Customer getCustomerByEmail(String email);
+    public List<Customer> getCustomerByEmail(String email);
     
     public List<Customer> getCustomerByName(String name);
     

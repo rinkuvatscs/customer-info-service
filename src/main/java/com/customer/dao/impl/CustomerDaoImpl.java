@@ -173,6 +173,7 @@ public class CustomerDaoImpl implements CustomerDao {
 			Object args[] = { mobileNumber };
 			List<Customer> response = jdbcTemplate.query(
 					QueryConstants.GET_CUSTOMER_BY_MOBILE_NUMBER,
+	
 					new CustomerExtractor(), args);
 			if (!StringUtils.isEmpty(response) && response.size() > 0) {
 				return response.get(0);
@@ -250,17 +251,17 @@ public class CustomerDaoImpl implements CustomerDao {
 	}
 
 	@Override
-	public Customer getCustomerByEmail(String email) {
+	public List<Customer> getCustomerByEmail(String email) {
 		if (!StringUtils.isEmpty(email)) {
 			Object args[] = { email };
 			List<Customer> response = jdbcTemplate.query(
 					QueryConstants.GET_CUSTOMER_BY_EMAIL,
 					new CustomerExtractor(), args);
 			if (!StringUtils.isEmpty(response) && response.size() > 0) {
-				return response.get(0);
+				return response;
 			}
 		}
-		return new Customer();
+		return new ArrayList<Customer>();
 	}
 
 	@Override

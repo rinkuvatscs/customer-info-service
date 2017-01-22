@@ -93,7 +93,7 @@ public class CustomerController {
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getCustomerByEmail/{email}")
 	@ResponseBody
-	public Customer getCustomerByEmail(@PathVariable String email) {
+	public List<Customer> getCustomerByEmail(@PathVariable String email) {
 		if (!StringUtils.isEmpty(email)) {
 			return customerService.getCustomerByEmail(email);
 		} else {
