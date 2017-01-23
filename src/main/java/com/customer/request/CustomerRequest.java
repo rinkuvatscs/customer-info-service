@@ -1,9 +1,8 @@
 package com.customer.request;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class CustomerRequest {
-   @JsonIgnore
+
     private Integer custId;
     private String custName;
     private String custEmail;

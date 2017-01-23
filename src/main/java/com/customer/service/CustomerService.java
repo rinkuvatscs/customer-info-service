@@ -11,15 +11,15 @@ public interface CustomerService {
     public String deleteCustomer(CustomerRequest customerRequest);
 
     public Customer getCustomerByAdharNumber(String adharNumber);
-    
+
     public Customer getCustomerByMobile(String mobile);
-    
-    public List<Customer> getCustomerByEmail(String email);
-    
+
+    public Customer getCustomerByEmail(String email);
+
     public List<Customer> getCustomerByName(String name);
-    
+
     public Customer getCustomerByCustomerId(Integer custId);
-    
-	public String updateCustomer(CustomerRequest customerRequest);
+
+    public String updateCustomer(CustomerRequest customerRequest);
 
 }
