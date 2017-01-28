@@ -1,12 +1,12 @@
-package com.customer;
+package com.patient;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CustomerInfoServiceApplication {
+public class PatientInfoServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CustomerInfoServiceApplication.class, args);
+		SpringApplication.run(PatientInfoServiceApplication.class, args);
 	}
 }
