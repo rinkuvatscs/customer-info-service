@@ -1,7 +1,7 @@
-package com.customer.request;
+package com.patient.request;
 
 
-public class CustomerRequest {
+public class PatientRequest {
 
     private Integer custId;
     private String custName;

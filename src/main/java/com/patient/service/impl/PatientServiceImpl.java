@@ -1,64 +1,64 @@
-package com.customer.service.impl;
+package com.patient.service.impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.customer.dao.CustomerDao;
-import com.customer.entity.Customer;
-import com.customer.request.CustomerRequest;
-import com.customer.service.CustomerService;
+import com.patient.dao.PatientDao;
+import com.patient.entity.Patient;
+import com.patient.request.PatientRequest;
+import com.patient.service.PatientService;
 
 @Service
-public class CustomerServiceImpl implements CustomerService {
+public class PatientServiceImpl implements PatientService {
     @Autowired
-    CustomerDao customerDao;
+    PatientDao patientDao;
 
     @Override
-    public String addCustomer(CustomerRequest customerRequest) {
+    public String addCustomer(PatientRequest customerRequest) {
         // TODO Auto-generated method stub
-        return customerDao.addCustomer(customerRequest);
+        return patientDao.addCustomer(customerRequest);
     }
 
     @Override
-    public String deleteCustomer(CustomerRequest customerRequest) {
+    public String deleteCustomer(PatientRequest customerRequest) {
         // TODO Auto-generated method stub
-        return customerDao.deleteCustomer(customerRequest);
+        return patientDao.deleteCustomer(customerRequest);
     }
 
     @Override
-    public Customer getCustomerByAdharNumber(String adharNumber) {
+    public Patient getCustomerByAdharNumber(String adharNumber) {
         // TODO Auto-generated method stub
-        Customer customer = customerDao.getCustomerByAdharNumber(adharNumber);
+        Patient customer = patientDao.getCustomerByAdharNumber(adharNumber);
         return customer;
     }
 
     @Override
-    public String updateCustomer(CustomerRequest customerRequest) {
+    public String updateCustomer(PatientRequest customerRequest) {
         // TODO Auto-generated method stub
-        return customerDao.updateCustomer(customerRequest);
+        return patientDao.updateCustomer(customerRequest);
     }
 
     @Override
-    public Customer getCustomerByMobile(String mobile) {
-        return customerDao.getCustomerByMobileNumber(mobile);
+    public Patient getCustomerByMobile(String mobile) {
+        return patientDao.getCustomerByMobileNumber(mobile);
     }
 
     @Override
-    public Customer getCustomerByCustomerId(Integer custId) {
-        return customerDao.getCustomerById(custId);
+    public Patient getCustomerByCustomerId(Integer custId) {
+        return patientDao.getCustomerById(custId);
     }
 
     @Override
-    public Customer getCustomerByEmail(String email) {
-        return customerDao.getCustomerByEmail(email);
+    public Patient getCustomerByEmail(String email) {
+        return patientDao.getCustomerByEmail(email);
     }
 
     @Override
-    public List<Customer> getCustomerByName(String name) {
+    public List<Patient> getCustomerByName(String name) {
         // TODO Auto-generated method stub
-        return customerDao.getCustomerByName(name);
+        return patientDao.getCustomerByName(name);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.customer.dao.impl;
+package com.patient.dao.impl;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -10,20 +10,20 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
-import com.customer.dao.CustomerDao;
-import com.customer.db.config.QueryConstants;
-import com.customer.entity.Customer;
-import com.customer.exceptionhandler.BadRequestException;
-import com.customer.extractor.CustomerExtractor;
-import com.customer.request.CustomerRequest;
+import com.patient.dao.PatientDao;
+import com.patient.db.config.QueryConstants;
+import com.patient.entity.Patient;
+import com.patient.exceptionhandler.BadRequestException;
+import com.patient.extractor.PatientExtractor;
+import com.patient.request.PatientRequest;
 
 @Repository
-public class CustomerDaoImpl implements CustomerDao {
+public class PatientDaoImpl implements PatientDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public String addCustomer(CustomerRequest customer) {
+    public String addCustomer(PatientRequest customer) {
         String response = null;
         // (cust_name,cust_mobile_number,cust_home_address,cust_adhaar_number,"
         // + "cust_mail,date_of_registered)
@@ -62,7 +62,7 @@ public class CustomerDaoImpl implements CustomerDao {
         return response;
     }
 
-    private boolean isCustomerExists(CustomerRequest customer) {
+    private boolean isCustomerExists(PatientRequest customer) {
 
         boolean isExist = false;
 
@@ -98,8 +98,8 @@ public class CustomerDaoImpl implements CustomerDao {
             args.add(customer.getCustMobile());
         }
 
-        List<Customer> response = jdbcTemplate.query(query.toString(),
-                new CustomerExtractor(), args.toArray());
+        List<Patient> response = jdbcTemplate.query(query.toString(),
+                new PatientExtractor(), args.toArray());
         if (!StringUtils.isEmpty(response) && response.size() > 0) {
             isExist = true;
         }
@@ -107,7 +107,7 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public String deleteCustomer(CustomerRequest customerRequest) {
+    public String deleteCustomer(PatientRequest customerRequest) {
 
         String response = null;
         int delete;
@@ -166,53 +166,53 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public Customer getCustomerById(Integer id) {
+    public Patient getCustomerById(Integer id) {
 
         if (!StringUtils.isEmpty(id)) {
             Object args[] = { id };
-            List<Customer> response = jdbcTemplate.query(
+            List<Patient> response = jdbcTemplate.query(
                     QueryConstants.GET_CUSTOMER_BY_ID, args,
-                    new CustomerExtractor());
+                    new PatientExtractor());
             if (!StringUtils.isEmpty(response) && response.size() > 0) {
                 return response.get(0);
             }
         }
-        return new Customer();
+        return new Patient();
     }
 
     @Override
-    public Customer getCustomerByAdharNumber(String adharNumber) {
+    public Patient getCustomerByAdharNumber(String adharNumber) {
 
         if (!StringUtils.isEmpty(adharNumber)) {
             Object args[] = { adharNumber };
-            List<Customer> response = jdbcTemplate.query(
+            List<Patient> response = jdbcTemplate.query(
                     QueryConstants.GET_CUSTOMER_BY_ADHAR_NUMBER,
-                    new CustomerExtractor(), args);
+                    new PatientExtractor(), args);
             if (!StringUtils.isEmpty(response) && response.size() > 0) {
                 return response.get(0);
             }
         }
-        return new Customer();
+        return new Patient();
     }
 
     @Override
-    public Customer getCustomerByMobileNumber(String mobileNumber) {
+    public Patient getCustomerByMobileNumber(String mobileNumber) {
 
         if (!StringUtils.isEmpty(mobileNumber)) {
             Object args[] = { mobileNumber };
-            List<Customer> response = jdbcTemplate.query(
+            List<Patient> response = jdbcTemplate.query(
                     QueryConstants.GET_CUSTOMER_BY_MOBILE_NUMBER,
 
-                    new CustomerExtractor(), args);
+                    new PatientExtractor(), args);
             if (!StringUtils.isEmpty(response) && response.size() > 0) {
                 return response.get(0);
             }
         }
-        return new Customer();
+        return new Patient();
     }
 
     @Override
-    public String updateCustomer(CustomerRequest customerRequest) {
+    public String updateCustomer(PatientRequest customerRequest) {
 
         String response = null;
         List<Object> args = new ArrayList<>();
@@ -301,30 +301,30 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public Customer getCustomerByEmail(String email) {
+    public Patient getCustomerByEmail(String email) {
         if (!StringUtils.isEmpty(email)) {
             Object args[] = { email };
-            List<Customer> response = jdbcTemplate.query(
+            List<Patient> response = jdbcTemplate.query(
                     QueryConstants.GET_CUSTOMER_BY_EMAIL,
-                    new CustomerExtractor(), args);
+                    new PatientExtractor(), args);
             if (!StringUtils.isEmpty(response) && response.size() > 0) {
                 return response.get(0);
             }
         }
-        return new Customer();
+        return new Patient();
     }
 
     @Override
-    public List<Customer> getCustomerByName(String name) {
+    public List<Patient> getCustomerByName(String name) {
         if (!StringUtils.isEmpty(name)) {
             Object args[] = { name };
-            List<Customer> response = jdbcTemplate.query(
+            List<Patient> response = jdbcTemplate.query(
                     QueryConstants.GET_CUSTOMER_BY_NAME,
-                    new CustomerExtractor(), args);
+                    new PatientExtractor(), args);
             if (!StringUtils.isEmpty(response) && response.size() > 0) {
                 return response;
             }
         }
-        return new ArrayList<Customer>();
+        return new ArrayList<Patient>();
     }
 }

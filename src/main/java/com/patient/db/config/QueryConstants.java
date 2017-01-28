@@ -1,4 +1,4 @@
-package com.customer.db.config;
+package com.patient.db.config;
 
 public interface QueryConstants {
 //cust_name varchar(45) default NULL, cust_mobile_number  cust_home_address , cust_adhaar_number cust_mail  date_of_registered status varchar(30) default 'Activate'

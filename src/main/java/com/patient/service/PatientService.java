@@ -1,25 +1,25 @@
-package com.customer.service;
+package com.patient.service;
 
 import java.util.List;
 
-import com.customer.entity.Customer;
-import com.customer.request.CustomerRequest;
+import com.patient.entity.Patient;
+import com.patient.request.PatientRequest;
 
-public interface CustomerService {
-    public String addCustomer(CustomerRequest customerRequest);
+public interface PatientService {
+    public String addCustomer(PatientRequest customerRequest);
 
-    public String deleteCustomer(CustomerRequest customerRequest);
+    public String deleteCustomer(PatientRequest customerRequest);
 
-    public Customer getCustomerByAdharNumber(String adharNumber);
+    public Patient getCustomerByAdharNumber(String adharNumber);
 
-    public Customer getCustomerByMobile(String mobile);
+    public Patient getCustomerByMobile(String mobile);
 
-    public Customer getCustomerByEmail(String email);
+    public Patient getCustomerByEmail(String email);
 
-    public List<Customer> getCustomerByName(String name);
+    public List<Patient> getCustomerByName(String name);
 
-    public Customer getCustomerByCustomerId(Integer custId);
+    public Patient getCustomerByCustomerId(Integer custId);
 
-    public String updateCustomer(CustomerRequest customerRequest);
+    public String updateCustomer(PatientRequest customerRequest);
 
 }

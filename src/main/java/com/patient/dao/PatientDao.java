@@ -1,25 +1,25 @@
-package com.customer.dao;
+package com.patient.dao;
 
 import java.util.List;
 
-import com.customer.entity.Customer;
-import com.customer.request.CustomerRequest;
+import com.patient.entity.Patient;
+import com.patient.request.PatientRequest;
 
-public interface CustomerDao {
-    public String addCustomer(CustomerRequest customer);
+public interface PatientDao {
+    public String addCustomer(PatientRequest customer);
 
-    public String deleteCustomer(CustomerRequest customerRequest);
+    public String deleteCustomer(PatientRequest customerRequest);
 
-    public Customer getCustomerByMobileNumber(String mobileNumber);
+    public Patient getCustomerByMobileNumber(String mobileNumber);
 
-    public Customer getCustomerByAdharNumber(String adharNumber);
+    public Patient getCustomerByAdharNumber(String adharNumber);
 
-    public Customer getCustomerByEmail(String email);
+    public Patient getCustomerByEmail(String email);
 
-    public List<Customer> getCustomerByName(String name);
+    public List<Patient> getCustomerByName(String name);
 
-    public Customer getCustomerById(Integer id);
+    public Patient getCustomerById(Integer id);
 
-    public String updateCustomer(CustomerRequest customerRequest);
+    public String updateCustomer(PatientRequest customerRequest);
 
 }

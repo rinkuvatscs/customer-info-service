@@ -1,6 +1,6 @@
-package com.customer.entity;
+package com.patient.entity;
 
-public class Customer {
+public class Patient {
     private Integer custId;
     private String custName;
     private String custEmail;
