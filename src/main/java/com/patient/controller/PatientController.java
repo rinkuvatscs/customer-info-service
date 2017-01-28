@@ -45,9 +45,9 @@ public class PatientController {
             @RequestBody PatientRequest customerRequest) {
 
         if (!StringUtils.isEmpty(customerRequest)
-                && !StringUtils.isEmpty(customerRequest.getCustAadhaar())
-                && !StringUtils.isEmpty(customerRequest.getCustMobile())
-                && !StringUtils.isEmpty(customerRequest.getCustEmail())) {
+                && !StringUtils.isEmpty(customerRequest.getPatientAadhaar())
+                && !StringUtils.isEmpty(customerRequest.getPatientMobile())
+                && !StringUtils.isEmpty(customerRequest.getPatientEmail())) {
             return new PatientResponse(
                     patientService.addCustomer(customerRequest));
         } else {
@@ -130,7 +130,7 @@ public class PatientController {
     public PatientResponse deleteCustomerById(@PathVariable Integer custId) {
         if (!StringUtils.isEmpty(custId)) {
             PatientRequest customerRequest = new PatientRequest();
-            customerRequest.setCustId(Integer.valueOf(custId));
+            customerRequest.setPatientId(Integer.valueOf(custId));
             return new PatientResponse(
                     patientService.deleteCustomer(customerRequest));
         } else
@@ -144,7 +144,7 @@ public class PatientController {
             @PathVariable String custAdharNumber) {
         if (!StringUtils.isEmpty(custAdharNumber)) {
             PatientRequest customerRequest = new PatientRequest();
-            customerRequest.setCustAadhaar(custAdharNumber);
+            customerRequest.setPatientAadhaar(custAdharNumber);
             return new PatientResponse(
                     patientService.deleteCustomer(customerRequest));
         } else
@@ -158,7 +158,7 @@ public class PatientController {
             @PathVariable String custMobileNumber) {
         if (!StringUtils.isEmpty(custMobileNumber)) {
             PatientRequest customerRequest = new PatientRequest();
-            customerRequest.setCustMobile(custMobileNumber);
+            customerRequest.setPatientMobile(custMobileNumber);
             return new PatientResponse(
                     patientService.deleteCustomer(customerRequest));
         } else

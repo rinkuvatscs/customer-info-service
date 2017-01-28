@@ -23,18 +23,18 @@ public class PatientDaoImpl implements PatientDao {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public String addCustomer(PatientRequest customer) {
+    public String addCustomer(PatientRequest patient) {
         String response = null;
         // (cust_name,cust_mobile_number,cust_home_address,cust_adhaar_number,"
         // + "cust_mail,date_of_registered)
-        if (!isCustomerExists(customer)) {
+        if (!isCustomerExists(patient)) {
 
             List<Object> args = new ArrayList<>();
-            args.add(customer.getCustName());
-            args.add(customer.getCustMobile());
-            args.add(customer.getCustHomeAddress());
-            args.add(customer.getCustAadhaar());
-            args.add(customer.getCustEmail());
+            args.add(patient.getPatientName());
+            args.add(patient.getPatientMobile());
+            args.add(patient.getPatientHomeAddress());
+            args.add(patient.getPatientAadhaar());
+            args.add(patient.getPatientEmail());
             // TODO We can use database date also that will be easy for use
             // using now() function in MYSQL
             LocalDate localDate = LocalDate.now();
@@ -44,40 +44,42 @@ public class PatientDaoImpl implements PatientDao {
             args.add(DateTimeFormatter.ofPattern("yyyy/MM/dd")
                     .format(localDate));
 
-            int row = jdbcTemplate.update(QueryConstants.ADD_CUSTOMER,
+            int row = jdbcTemplate.update(QueryConstants.ADD_PATIENT,
                     args.toArray());
             if (row == 1) {
-                response = customer.getCustName() + " registered successfully";
+                response = patient.getPatientName() + " registered successfully";
             } else {
-                response = "Sorry, " + customer.getCustName()
+                response = "Sorry, " + patient.getPatientName()
                         + " not registered . Please try again";
             }
         } else {
             // TODO need to explain here that our aadhar or mobile number
             // already registered please login
-            response = "Sorry, " + customer.getCustName()
+            response = "Sorry, " + patient.getPatientName()
                     + " already registered";
         }
 
         return response;
     }
 
-    private boolean isCustomerExists(PatientRequest customer) {
+    private boolean isCustomerExists(PatientRequest patient) {
 
         boolean isExist = false;
 
         boolean isAadharExists = false, isEmailExists = false;
 
-        StringBuffer query = new StringBuffer(QueryConstants.IS_CUSTOMER_EXIST);
+        StringBuffer query = new StringBuffer(QueryConstants.IS_PATIENT_EXIST);
         List<String> args = new ArrayList<>();
 
-        if (!StringUtils.isEmpty(customer.getCustAadhaar())) {
-            query.append(" where cust_adhaar_number = ?");
-            args.add(customer.getCustAadhaar());
+        if (!StringUtils.isEmpty(patient.getPatientAadhaar())) {
+            query.append(" where cust_adhaar_nukm,.........."
+            		+ ""
+            		+ "mber = ?");
+            args.add(patient.getPatientAadhaar());
             isAadharExists = true;
         }
 
-        if (!StringUtils.isEmpty(customer.getCustEmail())) {
+        if (!StringUtils.isEmpty(patient.getPatientEmail())) {
 
             if (isAadharExists) {
                 query.append(" or cust_mail = ?");
@@ -85,17 +87,17 @@ public class PatientDaoImpl implements PatientDao {
                 query.append(" where cust_mail = ?");
             }
             isEmailExists = true;
-            args.add(customer.getCustEmail());
+            args.add(patient.getPatientEmail());
         }
 
-        if (!StringUtils.isEmpty(customer.getCustMobile())) {
+        if (!StringUtils.isEmpty(patient.getPatientMobile())) {
 
             if (isAadharExists || isEmailExists) {
                 query.append(" or cust_mobile_number = ?");
             } else {
                 query.append(" where cust_mobile_number = ?");
             }
-            args.add(customer.getCustMobile());
+            args.add(patient.getPatientMobile());
         }
 
         List<Patient> response = jdbcTemplate.query(query.toString(),
@@ -107,59 +109,59 @@ public class PatientDaoImpl implements PatientDao {
     }
 
     @Override
-    public String deleteCustomer(PatientRequest customerRequest) {
+    public String deleteCustomer(PatientRequest patientRequest) {
 
         String response = null;
         int delete;
-        if (!StringUtils.isEmpty(customerRequest)) {
-            if (!StringUtils.isEmpty(customerRequest.getCustId())
-                    && getCustomerById(customerRequest.getCustId()).getCustId() != null) {
-                Object args[] = { customerRequest.getCustId() };
+        if (!StringUtils.isEmpty(patientRequest)) {
+            if (!StringUtils.isEmpty(patientRequest.getPatientId())
+                    && getCustomerById(patientRequest.getPatientId()).getCustId() != null) {
+                Object args[] = { patientRequest.getPatientId() };
                 delete = jdbcTemplate.update(
-                        "DELETE FROM customer WHERE cust_id = ? ", args);
+                        "DELETE FROM patient WHERE cust_id = ? ", args);
                 if (delete > 0) {
-                    response = "Customer with Customer ID "
-                            + customerRequest.getCustId()
+                    response = "Patient with Patient ID "
+                            + patientRequest.getPatientId()
                             + " successfully Deleted";
                 } else {
                     response = "Please try again later";
                 }
-            } else if (!StringUtils.isEmpty(customerRequest.getCustAadhaar())
+            } else if (!StringUtils.isEmpty(patientRequest.getPatientAadhaar())
                     && getCustomerByAdharNumber(
-                            customerRequest.getCustAadhaar()).getCustAadhaar() != null) {
-                Object args[] = { customerRequest.getCustAadhaar() };
+                            patientRequest.getPatientAadhaar()).getCustAadhaar() != null) {
+                Object args[] = { patientRequest.getPatientAadhaar() };
                 delete = jdbcTemplate.update(
-                        "DELETE FROM customer WHERE cust_adhaar_number = ? ",
+                        "DELETE FROM patient WHERE cust_adhaar_number = ? ",
                         args);
                 if (delete > 0) {
-                    response = "Customer with Aadhar Number "
-                            + customerRequest.getCustAadhaar()
+                    response = "Patient with Aadhar Number "
+                            + patientRequest.getPatientAadhaar()
                             + " successfully Deleted";
                 } else {
                     response = "Please try again later";
                 }
-            } else if (!StringUtils.isEmpty(customerRequest.getCustMobile())
+            } else if (!StringUtils.isEmpty(patientRequest.getPatientMobile())
                     && getCustomerByMobileNumber(
-                            customerRequest.getCustMobile()).getCustMobile() != null) {
-                Object args[] = { customerRequest.getCustMobile() };
+                            patientRequest.getPatientMobile()).getCustMobile() != null) {
+                Object args[] = { patientRequest.getPatientMobile() };
                 delete = jdbcTemplate.update(
-                        "DELETE FROM customer WHERE cust_mobile_number = ? ",
+                        "DELETE FROM patient WHERE cust_mobile_number = ? ",
                         args);
                 if (delete > 0) {
-                    response = "Customer with Mobile Number "
-                            + customerRequest.getCustMobile()
+                    response = "Patient with Mobile Number "
+                            + patientRequest.getPatientMobile()
                             + " successfully Deleted";
                 } else {
                     response = "Please try again later";
                 }
             } else {
                 throw new BadRequestException(
-                        "Please provide valid Customer Id or Customer Adhar Number or Customer Mobile Number.");
+                        "Please provide valid Patient Id or Patient Adhar Number or Patient Mobile Number.");
             }
         } else {
             throw new BadRequestException(
-                    "Customer can not be deleted without details {"
-                            + customerRequest + "}");
+                    "Patient can not be deleted without details {"
+                            + patientRequest + "}");
 
         }
         return response;
@@ -171,7 +173,7 @@ public class PatientDaoImpl implements PatientDao {
         if (!StringUtils.isEmpty(id)) {
             Object args[] = { id };
             List<Patient> response = jdbcTemplate.query(
-                    QueryConstants.GET_CUSTOMER_BY_ID, args,
+                    QueryConstants.GET_PATIENT_BY_ID, args,
                     new PatientExtractor());
             if (!StringUtils.isEmpty(response) && response.size() > 0) {
                 return response.get(0);
@@ -186,7 +188,7 @@ public class PatientDaoImpl implements PatientDao {
         if (!StringUtils.isEmpty(adharNumber)) {
             Object args[] = { adharNumber };
             List<Patient> response = jdbcTemplate.query(
-                    QueryConstants.GET_CUSTOMER_BY_ADHAR_NUMBER,
+                    QueryConstants.GET_PATIENT_BY_ADHAR_NUMBER,
                     new PatientExtractor(), args);
             if (!StringUtils.isEmpty(response) && response.size() > 0) {
                 return response.get(0);
@@ -201,7 +203,7 @@ public class PatientDaoImpl implements PatientDao {
         if (!StringUtils.isEmpty(mobileNumber)) {
             Object args[] = { mobileNumber };
             List<Patient> response = jdbcTemplate.query(
-                    QueryConstants.GET_CUSTOMER_BY_MOBILE_NUMBER,
+                    QueryConstants.GET_PATIENT_BY_MOBILE_NUMBER,
 
                     new PatientExtractor(), args);
             if (!StringUtils.isEmpty(response) && response.size() > 0) {
@@ -212,43 +214,43 @@ public class PatientDaoImpl implements PatientDao {
     }
 
     @Override
-    public String updateCustomer(PatientRequest customerRequest) {
+    public String updateCustomer(PatientRequest patientRequest) {
 
         String response = null;
         List<Object> args = new ArrayList<>();
-        StringBuilder query = new StringBuilder(" UPDATE customer SET ");
-        if (!StringUtils.isEmpty(customerRequest)) {
+        StringBuilder query = new StringBuilder(" UPDATE patient SET ");
+        if (!StringUtils.isEmpty(patientRequest)) {
 
             // Will check only using CustId Here
-            if (null != getCustomerById(customerRequest.getCustId())
+            if (null != getCustomerById(patientRequest.getPatientId())
                     .getCustAadhaar()) {
                 boolean isCustomerName = false, isHomeAddress = false, isCustEmail = false;
-                if (null != customerRequest.getCustName()) {
+                if (null != patientRequest.getPatientName()) {
                     query.append(" cust_name = ? ");
-                    args.add(customerRequest.getCustName());
+                    args.add(patientRequest.getPatientName());
                     isCustomerName = true;
                 }
-                if (null != customerRequest.getCustHomeAddress()) {
+                if (null != patientRequest.getPatientHomeAddress()) {
                     if (isCustomerName) {
                         query.append(" , cust_home_address = ? ");
                     } else {
                         query.append(" cust_home_address = ? ");
                     }
-                    args.add(customerRequest.getCustHomeAddress());
+                    args.add(patientRequest.getPatientHomeAddress());
                     isHomeAddress = true;
                 }
 
-                if (null != customerRequest.getCustEmail()) {
+                if (null != patientRequest.getPatientEmail()) {
 
                     if (null == getCustomerByEmail(
-                            customerRequest.getCustEmail()).getCustAadhaar()) {
+                            patientRequest.getPatientEmail()).getCustAadhaar()) {
                         if (isHomeAddress || isCustomerName) {
                             query.append(" , cust_mail = ? ");
 
                         } else {
                             query.append(" cust_mail = ?");
                         }
-                        args.add(customerRequest.getCustEmail());
+                        args.add(patientRequest.getPatientEmail());
                         isCustEmail = true;
                     } else {
                         throw new BadRequestException(
@@ -256,17 +258,17 @@ public class PatientDaoImpl implements PatientDao {
                     }
                 }
 
-                if (null != customerRequest.getCustMobile()) {
+                if (null != patientRequest.getPatientMobile()) {
 
                     if (null == getCustomerByMobileNumber(
-                            customerRequest.getCustMobile()).getCustAadhaar()) {
+                            patientRequest.getPatientMobile()).getCustAadhaar()) {
                         if (isHomeAddress || isCustomerName || isCustEmail) {
                             query.append(" , cust_mobile_number = ? ");
 
                         } else {
                             query.append(" cust_mobile_number = ?");
                         }
-                        args.add(customerRequest.getCustMobile());
+                        args.add(patientRequest.getPatientMobile());
                     } else {
                         throw new BadRequestException(
                                 "Updated Mobile Number already in Use Choose Forget Password option");
@@ -274,9 +276,9 @@ public class PatientDaoImpl implements PatientDao {
                 }
 
                 if (isCustomerName || isHomeAddress || isCustEmail) {
-                    if (null != customerRequest.getCustId()) {
+                    if (null != patientRequest.getPatientId()) {
                         query.append(" WHERE cust_id = ? ");
-                        args.add(customerRequest.getCustId());
+                        args.add(patientRequest.getPatientId());
                     } else {
                         response = "Please Enter data to Update....!!!";
                     }
@@ -285,16 +287,16 @@ public class PatientDaoImpl implements PatientDao {
                     int update = jdbcTemplate.update(query.toString(),
                             args.toArray());
                     if (update > 0) {
-                        response = "Customer successfully Updated...!!!";
+                        response = "Patient successfully Updated...!!!";
                     } else {
                         response = "There is some problem, please try again later...!!!";
                     }
                 }
             } else {
-                response = "Customer does not exist...!!!";
+                response = "Patient does not exist...!!!";
             }
         } else {
-            response = "Customer details are Empty, provide some details to update....!!!";
+            response = "Patient details are Empty, provide some details to update....!!!";
         }
 
         return response;
@@ -305,7 +307,7 @@ public class PatientDaoImpl implements PatientDao {
         if (!StringUtils.isEmpty(email)) {
             Object args[] = { email };
             List<Patient> response = jdbcTemplate.query(
-                    QueryConstants.GET_CUSTOMER_BY_EMAIL,
+                    QueryConstants.GET_PATIENT_BY_EMAIL,
                     new PatientExtractor(), args);
             if (!StringUtils.isEmpty(response) && response.size() > 0) {
                 return response.get(0);
@@ -319,7 +321,7 @@ public class PatientDaoImpl implements PatientDao {
         if (!StringUtils.isEmpty(name)) {
             Object args[] = { name };
             List<Patient> response = jdbcTemplate.query(
-                    QueryConstants.GET_CUSTOMER_BY_NAME,
+                    QueryConstants.GET_PATIENT_BY_NAME,
                     new PatientExtractor(), args);
             if (!StringUtils.isEmpty(response) && response.size() > 0) {
                 return response;

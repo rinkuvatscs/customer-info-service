@@ -6,9 +6,9 @@ import com.patient.entity.Patient;
 import com.patient.request.PatientRequest;
 
 public interface PatientDao {
-    public String addCustomer(PatientRequest customer);
+    public String addCustomer(PatientRequest patient);
 
-    public String deleteCustomer(PatientRequest customerRequest);
+    public String deleteCustomer(PatientRequest patientRequest);
 
     public Patient getCustomerByMobileNumber(String mobileNumber);
 
@@ -20,6 +20,6 @@ public interface PatientDao {
 
     public Patient getCustomerById(Integer id);
 
-    public String updateCustomer(PatientRequest customerRequest);
+    public String updateCustomer(PatientRequest patientRequest);
 
 }
