@@ -1,12 +1,12 @@
-package com.customer.response;
+package com.patient.response;
 
-public class CustomerResponse {
+public class PatientResponse {
 	private String message ;
 	
-	public CustomerResponse(){
+	public PatientResponse(){
 	}
 	
-	public CustomerResponse(String message){
+	public PatientResponse(String message){
 		this.message = message ;
 	}
 	

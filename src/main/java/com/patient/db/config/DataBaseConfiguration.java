@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.customer.db.config;
+package com.patient.db.config;
 
 import java.sql.SQLException;
 

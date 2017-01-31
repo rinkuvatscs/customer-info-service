@@ -1,4 +1,4 @@
-package com.customer.swagger.config;
+package com.patient.swagger.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

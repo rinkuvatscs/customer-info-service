@@ -1,8 +1,6 @@
-package com.customer.request;
+package com.patient.entity;
 
-
-public class CustomerRequest {
-
+public class Patient {
     private Integer custId;
     private String custName;
     private String custEmail;
@@ -60,8 +58,9 @@ public class CustomerRequest {
 
     @Override
     public String toString() {
-        return "CustomerRequest [custName=" + custName + ", custEmail="
-                + custEmail + ", custAadhaar=" + custAadhaar + ", custMobile="
-                + custMobile + ", custHomeAddress=" + custHomeAddress + "]";
+        return "Customer [custName=" + custName + ", custEmail=" + custEmail
+                + ", custAadhaar=" + custAadhaar + ", custMobile=" + custMobile
+                + ", custHomeAddress=" + custHomeAddress + "]";
     }
+
 }
