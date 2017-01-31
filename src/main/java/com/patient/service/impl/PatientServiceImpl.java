@@ -16,49 +16,49 @@ public class PatientServiceImpl implements PatientService {
     PatientDao patientDao;
 
     @Override
-    public String addCustomer(PatientRequest customerRequest) {
+    public String addpatient(PatientRequest patientRequest) {
         // TODO Auto-generated method stub
-        return patientDao.addCustomer(customerRequest);
+        return patientDao.addpatient(patientRequest);
     }
 
     @Override
-    public String deleteCustomer(PatientRequest customerRequest) {
+    public String deletepatient(PatientRequest patientRequest) {
         // TODO Auto-generated method stub
-        return patientDao.deleteCustomer(customerRequest);
+        return patientDao.deletepatient(patientRequest);
     }
 
     @Override
-    public Patient getCustomerByAdharNumber(String adharNumber) {
+    public Patient getpatientByAdharNumber(String adharNumber) {
         // TODO Auto-generated method stub
-        Patient customer = patientDao.getCustomerByAdharNumber(adharNumber);
-        return customer;
+        Patient patient = patientDao.getpatientByAdharNumber(adharNumber);
+        return patient;
     }
 
     @Override
-    public String updateCustomer(PatientRequest customerRequest) {
+    public String updatepatient(PatientRequest patientRequest) {
         // TODO Auto-generated method stub
-        return patientDao.updateCustomer(customerRequest);
+        return patientDao.updatepatient(patientRequest);
     }
 
     @Override
-    public Patient getCustomerByMobile(String mobile) {
-        return patientDao.getCustomerByMobileNumber(mobile);
+    public Patient getpatientByMobile(String mobile) {
+        return patientDao.getpatientByMobileNumber(mobile);
     }
 
     @Override
-    public Patient getCustomerByCustomerId(Integer custId) {
-        return patientDao.getCustomerById(custId);
+    public Patient getpatientBypatientId(Integer custId) {
+        return patientDao.getpatientById(custId);
     }
 
     @Override
-    public Patient getCustomerByEmail(String email) {
-        return patientDao.getCustomerByEmail(email);
+    public Patient getpatientByEmail(String email) {
+        return patientDao.getpatientByEmail(email);
     }
 
     @Override
-    public List<Patient> getCustomerByName(String name) {
+    public List<Patient> getpatientByName(String name) {
         // TODO Auto-generated method stub
-        return patientDao.getCustomerByName(name);
+        return patientDao.getpatientByName(name);
     }
 
 }

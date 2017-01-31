@@ -6,20 +6,20 @@ import com.patient.entity.Patient;
 import com.patient.request.PatientRequest;
 
 public interface PatientDao {
-    public String addCustomer(PatientRequest patient);
+    public String addpatient(PatientRequest patient);
 
-    public String deleteCustomer(PatientRequest patientRequest);
+    public String deletepatient(PatientRequest patientRequest);
 
-    public Patient getCustomerByMobileNumber(String mobileNumber);
+    public Patient getpatientByMobileNumber(String mobileNumber);
 
-    public Patient getCustomerByAdharNumber(String adharNumber);
+    public Patient getpatientByAdharNumber(String adharNumber);
 
-    public Patient getCustomerByEmail(String email);
+    public Patient getpatientByEmail(String email);
 
-    public List<Patient> getCustomerByName(String name);
+    public List<Patient> getpatientByName(String name);
 
-    public Patient getCustomerById(Integer id);
+    public Patient getpatientById(Integer id);
 
-    public String updateCustomer(PatientRequest patientRequest);
+    public String updatepatient(PatientRequest patientRequest);
 
 }

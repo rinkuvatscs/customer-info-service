@@ -23,11 +23,11 @@ public class PatientDaoImpl implements PatientDao {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public String addCustomer(PatientRequest patient) {
+    public String addpatient(PatientRequest patient) {
         String response = null;
         // (cust_name,cust_mobile_number,cust_home_address,cust_adhaar_number,"
         // + "cust_mail,date_of_registered)
-        if (!isCustomerExists(patient)) {
+        if (!ispatientExists(patient)) {
 
             List<Object> args = new ArrayList<>();
             args.add(patient.getPatientName());
@@ -47,7 +47,8 @@ public class PatientDaoImpl implements PatientDao {
             int row = jdbcTemplate.update(QueryConstants.ADD_PATIENT,
                     args.toArray());
             if (row == 1) {
-                response = patient.getPatientName() + " registered successfully";
+                response = patient.getPatientName()
+                        + " registered successfully";
             } else {
                 response = "Sorry, " + patient.getPatientName()
                         + " not registered . Please try again";
@@ -62,7 +63,7 @@ public class PatientDaoImpl implements PatientDao {
         return response;
     }
 
-    private boolean isCustomerExists(PatientRequest patient) {
+    private boolean ispatientExists(PatientRequest patient) {
 
         boolean isExist = false;
 
@@ -72,9 +73,7 @@ public class PatientDaoImpl implements PatientDao {
         List<String> args = new ArrayList<>();
 
         if (!StringUtils.isEmpty(patient.getPatientAadhaar())) {
-            query.append(" where cust_adhaar_nukm,.........."
-            		+ ""
-            		+ "mber = ?");
+            query.append(" where cust_adhaar_nukm,.........." + "" + "mber = ?");
             args.add(patient.getPatientAadhaar());
             isAadharExists = true;
         }
@@ -109,13 +108,14 @@ public class PatientDaoImpl implements PatientDao {
     }
 
     @Override
-    public String deleteCustomer(PatientRequest patientRequest) {
+    public String deletepatient(PatientRequest patientRequest) {
 
         String response = null;
         int delete;
         if (!StringUtils.isEmpty(patientRequest)) {
             if (!StringUtils.isEmpty(patientRequest.getPatientId())
-                    && getCustomerById(patientRequest.getPatientId()).getCustId() != null) {
+                    && getpatientById(patientRequest.getPatientId())
+                            .getCustId() != null) {
                 Object args[] = { patientRequest.getPatientId() };
                 delete = jdbcTemplate.update(
                         "DELETE FROM patient WHERE cust_id = ? ", args);
@@ -127,8 +127,9 @@ public class PatientDaoImpl implements PatientDao {
                     response = "Please try again later";
                 }
             } else if (!StringUtils.isEmpty(patientRequest.getPatientAadhaar())
-                    && getCustomerByAdharNumber(
-                            patientRequest.getPatientAadhaar()).getCustAadhaar() != null) {
+                    && getpatientByAdharNumber(
+                            patientRequest.getPatientAadhaar())
+                            .getCustAadhaar() != null) {
                 Object args[] = { patientRequest.getPatientAadhaar() };
                 delete = jdbcTemplate.update(
                         "DELETE FROM patient WHERE cust_adhaar_number = ? ",
@@ -141,7 +142,7 @@ public class PatientDaoImpl implements PatientDao {
                     response = "Please try again later";
                 }
             } else if (!StringUtils.isEmpty(patientRequest.getPatientMobile())
-                    && getCustomerByMobileNumber(
+                    && getpatientByMobileNumber(
                             patientRequest.getPatientMobile()).getCustMobile() != null) {
                 Object args[] = { patientRequest.getPatientMobile() };
                 delete = jdbcTemplate.update(
@@ -168,7 +169,7 @@ public class PatientDaoImpl implements PatientDao {
     }
 
     @Override
-    public Patient getCustomerById(Integer id) {
+    public Patient getpatientById(Integer id) {
 
         if (!StringUtils.isEmpty(id)) {
             Object args[] = { id };
@@ -183,7 +184,7 @@ public class PatientDaoImpl implements PatientDao {
     }
 
     @Override
-    public Patient getCustomerByAdharNumber(String adharNumber) {
+    public Patient getpatientByAdharNumber(String adharNumber) {
 
         if (!StringUtils.isEmpty(adharNumber)) {
             Object args[] = { adharNumber };
@@ -198,7 +199,7 @@ public class PatientDaoImpl implements PatientDao {
     }
 
     @Override
-    public Patient getCustomerByMobileNumber(String mobileNumber) {
+    public Patient getpatientByMobileNumber(String mobileNumber) {
 
         if (!StringUtils.isEmpty(mobileNumber)) {
             Object args[] = { mobileNumber };
@@ -214,7 +215,7 @@ public class PatientDaoImpl implements PatientDao {
     }
 
     @Override
-    public String updateCustomer(PatientRequest patientRequest) {
+    public String updatepatient(PatientRequest patientRequest) {
 
         String response = null;
         List<Object> args = new ArrayList<>();
@@ -222,16 +223,16 @@ public class PatientDaoImpl implements PatientDao {
         if (!StringUtils.isEmpty(patientRequest)) {
 
             // Will check only using CustId Here
-            if (null != getCustomerById(patientRequest.getPatientId())
+            if (null != getpatientById(patientRequest.getPatientId())
                     .getCustAadhaar()) {
-                boolean isCustomerName = false, isHomeAddress = false, isCustEmail = false;
+                boolean ispatientName = false, isHomeAddress = false, isCustEmail = false;
                 if (null != patientRequest.getPatientName()) {
                     query.append(" cust_name = ? ");
                     args.add(patientRequest.getPatientName());
-                    isCustomerName = true;
+                    ispatientName = true;
                 }
                 if (null != patientRequest.getPatientHomeAddress()) {
-                    if (isCustomerName) {
+                    if (ispatientName) {
                         query.append(" , cust_home_address = ? ");
                     } else {
                         query.append(" cust_home_address = ? ");
@@ -242,9 +243,9 @@ public class PatientDaoImpl implements PatientDao {
 
                 if (null != patientRequest.getPatientEmail()) {
 
-                    if (null == getCustomerByEmail(
+                    if (null == getpatientByEmail(
                             patientRequest.getPatientEmail()).getCustAadhaar()) {
-                        if (isHomeAddress || isCustomerName) {
+                        if (isHomeAddress || ispatientName) {
                             query.append(" , cust_mail = ? ");
 
                         } else {
@@ -260,9 +261,9 @@ public class PatientDaoImpl implements PatientDao {
 
                 if (null != patientRequest.getPatientMobile()) {
 
-                    if (null == getCustomerByMobileNumber(
+                    if (null == getpatientByMobileNumber(
                             patientRequest.getPatientMobile()).getCustAadhaar()) {
-                        if (isHomeAddress || isCustomerName || isCustEmail) {
+                        if (isHomeAddress || ispatientName || isCustEmail) {
                             query.append(" , cust_mobile_number = ? ");
 
                         } else {
@@ -275,7 +276,7 @@ public class PatientDaoImpl implements PatientDao {
                     }
                 }
 
-                if (isCustomerName || isHomeAddress || isCustEmail) {
+                if (ispatientName || isHomeAddress || isCustEmail) {
                     if (null != patientRequest.getPatientId()) {
                         query.append(" WHERE cust_id = ? ");
                         args.add(patientRequest.getPatientId());
@@ -303,7 +304,7 @@ public class PatientDaoImpl implements PatientDao {
     }
 
     @Override
-    public Patient getCustomerByEmail(String email) {
+    public Patient getpatientByEmail(String email) {
         if (!StringUtils.isEmpty(email)) {
             Object args[] = { email };
             List<Patient> response = jdbcTemplate.query(
@@ -317,12 +318,12 @@ public class PatientDaoImpl implements PatientDao {
     }
 
     @Override
-    public List<Patient> getCustomerByName(String name) {
+    public List<Patient> getpatientByName(String name) {
         if (!StringUtils.isEmpty(name)) {
             Object args[] = { name };
             List<Patient> response = jdbcTemplate.query(
-                    QueryConstants.GET_PATIENT_BY_NAME,
-                    new PatientExtractor(), args);
+                    QueryConstants.GET_PATIENT_BY_NAME, new PatientExtractor(),
+                    args);
             if (!StringUtils.isEmpty(response) && response.size() > 0) {
                 return response;
             }

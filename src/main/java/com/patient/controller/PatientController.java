@@ -29,7 +29,7 @@ import com.patient.service.PatientService;
 @RestController
 @CrossOrigin
 @RequestMapping("/patient")
-@Api(basePath = "/patient", value = "customermanagement", description = "Operations with Landlords", produces = "application/json")
+@Api(basePath = "/patient", value = "patientmanagement", description = "Operations with Landlords", produces = "application/json")
 public class PatientController {
 
     @Autowired
@@ -37,151 +37,149 @@ public class PatientController {
 
     @RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation(value = "add new customer", notes = "add new customer")
+    @ApiOperation(value = "add new patient", notes = "add new patient")
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = "Fields are with validation errors"),
             @ApiResponse(code = 201, message = "") })
-    public PatientResponse addCustomer(
-            @RequestBody PatientRequest customerRequest) {
+    public PatientResponse addpatient(@RequestBody PatientRequest patientRequest) {
 
-        if (!StringUtils.isEmpty(customerRequest)
-                && !StringUtils.isEmpty(customerRequest.getPatientAadhaar())
-                && !StringUtils.isEmpty(customerRequest.getPatientMobile())
-                && !StringUtils.isEmpty(customerRequest.getPatientEmail())) {
+        if (!StringUtils.isEmpty(patientRequest)
+                && !StringUtils.isEmpty(patientRequest.getPatientAadhaar())
+                && !StringUtils.isEmpty(patientRequest.getPatientMobile())
+                && !StringUtils.isEmpty(patientRequest.getPatientEmail())) {
             return new PatientResponse(
-                    patientService.addCustomer(customerRequest));
+                    patientService.addpatient(patientRequest));
         } else {
             throw new BadRequestException(
-                    "Customer Aadhar Number,Mobile Number and Email Id should not be blank");
+                    "patient Aadhar Number,Mobile Number and Email Id should not be blank");
         }
 
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getCustomerByAadhar/{adharNumber}")
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getpatientByAadhar/{adharNumber}")
     @ResponseBody
-    public Patient getCustomerByAdharNumber(@PathVariable String adharNumber) {
+    public Patient getpatientByAdharNumber(@PathVariable String adharNumber) {
         if (!StringUtils.isEmpty(adharNumber)) {
-            return patientService.getCustomerByAdharNumber(adharNumber);
+            return patientService.getpatientByAdharNumber(adharNumber);
         } else {
             throw new BadRequestException(
-                    "Customer Aadhar Number should not be blank");
+                    "patient Aadhar Number should not be blank");
         }
 
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getCustomerByMobile/{mobile}")
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getpatientByMobile/{mobile}")
     @ResponseBody
-    public Patient getCustomerByMobile(@PathVariable String mobile) {
+    public Patient getpatientByMobile(@PathVariable String mobile) {
         if (!StringUtils.isEmpty(mobile)) {
-            return patientService.getCustomerByMobile(mobile);
+            return patientService.getpatientByMobile(mobile);
         } else {
             throw new BadRequestException(
-                    "Customer Mobile Number should not be blank");
+                    "patient Mobile Number should not be blank");
         }
 
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getCustomerById/{custId}")
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getpatientById/{custId}")
     @ResponseBody
-    public Patient getCustomerByCustomerId(@PathVariable String custId) {
+    public Patient getpatientBypatientId(@PathVariable String custId) {
         if (!StringUtils.isEmpty(custId)) {
-            Integer customerId = 0;
+            Integer patientId = 0;
             try {
-                customerId = Integer.parseInt(custId);
+                patientId = Integer.parseInt(custId);
             } catch (NumberFormatException numberFormatException) {
                 throw new BadRequestException(
-                        "Customer ID should not be Alpanumeric. It Should be Number only");
+                        "patient ID should not be Alpanumeric. It Should be Number only");
             }
-            return patientService.getCustomerByCustomerId(customerId);
+            return patientService.getpatientBypatientId(patientId);
         } else {
-            throw new BadRequestException("Customer ID should not be blank");
+            throw new BadRequestException("patient ID should not be blank");
         }
 
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getCustomerByEmail/{email}")
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getpatientByEmail/{email}")
     @ResponseBody
-    public Patient getCustomerByEmail(@PathVariable String email) {
+    public Patient getpatientByEmail(@PathVariable String email) {
         if (!StringUtils.isEmpty(email)) {
-            return patientService.getCustomerByEmail(email);
+            return patientService.getpatientByEmail(email);
         } else {
-            throw new BadRequestException("Customer Email should not be blank");
+            throw new BadRequestException("patient Email should not be blank");
         }
 
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getCustomerByName/{name}")
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getpatientByName/{name}")
     @ResponseBody
-    public List<Patient> getCustomerByName(@PathVariable String name) {
+    public List<Patient> getpatientByName(@PathVariable String name) {
         if (!StringUtils.isEmpty(name)) {
-            return patientService.getCustomerByName(name);
+            return patientService.getpatientByName(name);
         } else {
-            throw new BadRequestException("Customer Name should not be blank");
+            throw new BadRequestException("patient Name should not be blank");
         }
 
     }
 
     @RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/{custId}")
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "delete customer", notes = "delete customer")
+    @ApiOperation(value = "delete patient", notes = "delete patient")
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = "Fields are with validation errors"),
             @ApiResponse(code = 201, message = "") })
-    public PatientResponse deleteCustomerById(@PathVariable Integer custId) {
+    public PatientResponse deletepatientById(@PathVariable Integer custId) {
         if (!StringUtils.isEmpty(custId)) {
-            PatientRequest customerRequest = new PatientRequest();
-            customerRequest.setPatientId(Integer.valueOf(custId));
+            PatientRequest patientRequest = new PatientRequest();
+            patientRequest.setPatientId(Integer.valueOf(custId));
             return new PatientResponse(
-                    patientService.deleteCustomer(customerRequest));
+                    patientService.deletepatient(patientRequest));
         } else
             throw new BadRequestException(
-                    "customerRequest Id should not be blank");
+                    "patientRequest Id should not be blank");
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/deleteCustomerByAadhar/{custAdharNumber}")
+    @RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/deletepatientByAadhar/{custAdharNumber}")
     @ResponseBody
-    public PatientResponse deleteCustomerByAdharNumber(
+    public PatientResponse deletepatientByAdharNumber(
             @PathVariable String custAdharNumber) {
         if (!StringUtils.isEmpty(custAdharNumber)) {
-            PatientRequest customerRequest = new PatientRequest();
-            customerRequest.setPatientAadhaar(custAdharNumber);
+            PatientRequest patientRequest = new PatientRequest();
+            patientRequest.setPatientAadhaar(custAdharNumber);
             return new PatientResponse(
-                    patientService.deleteCustomer(customerRequest));
+                    patientService.deletepatient(patientRequest));
         } else
             throw new BadRequestException(
-                    "Customer Aaddhar Number should not be blank");
+                    "patient Aaddhar Number should not be blank");
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/deleteCustomerByMobile/{custMobileNumber}")
+    @RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/deletepatientByMobile/{custMobileNumber}")
     @ResponseBody
-    public PatientResponse deleteCustomerByMobileNumber(
+    public PatientResponse deletepatientByMobileNumber(
             @PathVariable String custMobileNumber) {
         if (!StringUtils.isEmpty(custMobileNumber)) {
-            PatientRequest customerRequest = new PatientRequest();
-            customerRequest.setPatientMobile(custMobileNumber);
+            PatientRequest patientRequest = new PatientRequest();
+            patientRequest.setPatientMobile(custMobileNumber);
             return new PatientResponse(
-                    patientService.deleteCustomer(customerRequest));
+                    patientService.deletepatient(patientRequest));
         } else
             throw new BadRequestException(
-                    "Customer Mobile Number should not be blank");
+                    "patient Mobile Number should not be blank");
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "update customer", notes = "update customer")
+    @ApiOperation(value = "update patient", notes = "update patient")
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = "Fields are with validation errors"),
             @ApiResponse(code = 201, message = "") })
-    public PatientResponse updateCustomer(
-            @RequestBody PatientRequest customerRequest) {
+    public PatientResponse updatepatient(
+            @RequestBody PatientRequest patientRequest) {
 
-        return new PatientResponse(
-                patientService.updateCustomer(customerRequest));
+        return new PatientResponse(patientService.updatepatient(patientRequest));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String welcome() {
-        return "Welcome to Customer Management Tool";
+        return "Welcome to patient Management Tool";
     }
 
 }

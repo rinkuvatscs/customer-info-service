@@ -6,20 +6,20 @@ import com.patient.entity.Patient;
 import com.patient.request.PatientRequest;
 
 public interface PatientService {
-    public String addCustomer(PatientRequest customerRequest);
+    public String addpatient(PatientRequest patientRequest);
 
-    public String deleteCustomer(PatientRequest customerRequest);
+    public String deletepatient(PatientRequest patientRequest);
 
-    public Patient getCustomerByAdharNumber(String adharNumber);
+    public Patient getpatientByAdharNumber(String adharNumber);
 
-    public Patient getCustomerByMobile(String mobile);
+    public Patient getpatientByMobile(String mobile);
 
-    public Patient getCustomerByEmail(String email);
+    public Patient getpatientByEmail(String email);
 
-    public List<Patient> getCustomerByName(String name);
+    public List<Patient> getpatientByName(String name);
 
-    public Patient getCustomerByCustomerId(Integer custId);
+    public Patient getpatientBypatientId(Integer custId);
 
-    public String updateCustomer(PatientRequest customerRequest);
+    public String updatepatient(PatientRequest patientRequest);
 
 }

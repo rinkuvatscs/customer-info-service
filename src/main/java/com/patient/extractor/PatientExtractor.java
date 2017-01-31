@@ -21,29 +21,30 @@ import com.patient.entity.Patient;
  */
 public class PatientExtractor implements ResultSetExtractor<List<Patient>> {
 
-	List<Patient> customerList = new ArrayList<>();
+    List<Patient> patientList = new ArrayList<>();
 
-	@Override
-	public List<Patient> extractData(ResultSet rs) throws SQLException, DataAccessException {
-		Patient customer;
-		// cust_id int(11) NOT NULL auto_increment, cust_name varchar(45)
-		// default NULL, cust_mobile_number varchar(10) default NULL,
-		// cust_home_address varchar(255) default NULL, cust_adhaar_number
-		// varchar(20) default NULL, cust_mail varchar(4) default NULL,
-		// date_of_registered varchar(20) default NULL, status varchar(30)
-		// default 'Activate', PRIMARY KEY (cust_id) ) ENGINE=InnoDB DEFAULT
-		// CHARSET=latin1;
-		while (rs.next()) {
-			customer = new Patient();
-			customer.setCustId(rs.getInt("cust_id"));
-			customer.setCustAadhaar(rs.getString("cust_adhaar_number"));
-			customer.setCustHomeAddress(rs.getString("cust_home_address"));
-			customer.setCustName(rs.getString("cust_name"));
-			customer.setCustMobile(rs.getString("cust_mobile_number"));
-			customer.setCustEmail(rs.getString("cust_mail"));
-			customerList.add(customer);
-		}
-		return customerList;
-	}
+    @Override
+    public List<Patient> extractData(ResultSet rs) throws SQLException,
+            DataAccessException {
+        Patient patient;
+        // cust_id int(11) NOT NULL auto_increment, cust_name varchar(45)
+        // default NULL, cust_mobile_number varchar(10) default NULL,
+        // cust_home_address varchar(255) default NULL, cust_adhaar_number
+        // varchar(20) default NULL, cust_mail varchar(4) default NULL,
+        // date_of_registered varchar(20) default NULL, status varchar(30)
+        // default 'Activate', PRIMARY KEY (cust_id) ) ENGINE=InnoDB DEFAULT
+        // CHARSET=latin1;
+        while (rs.next()) {
+            patient = new Patient();
+            patient.setCustId(rs.getInt("patient_id"));
+            patient.setCustAadhaar(rs.getString("patient_adhaar_number"));
+            patient.setCustHomeAddress(rs.getString("patient_home_address"));
+            patient.setCustName(rs.getString("patient_name"));
+            patient.setCustMobile(rs.getString("patient_mobile_number"));
+            patient.setCustEmail(rs.getString("patient_mail"));
+            patientList.add(patient);
+        }
+        return patientList;
+    }
 
 }
