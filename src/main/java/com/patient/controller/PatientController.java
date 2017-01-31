@@ -28,8 +28,8 @@ import com.patient.service.PatientService;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/customer")
-@Api(basePath = "/customer", value = "customermanagement", description = "Operations with Landlords", produces = "application/json")
+@RequestMapping("/patient")
+@Api(basePath = "/patient", value = "customermanagement", description = "Operations with Landlords", produces = "application/json")
 public class PatientController {
 
     @Autowired
