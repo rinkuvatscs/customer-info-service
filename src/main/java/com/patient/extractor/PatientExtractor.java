@@ -36,12 +36,12 @@ public class PatientExtractor implements ResultSetExtractor<List<Patient>> {
         // CHARSET=latin1;
         while (rs.next()) {
             patient = new Patient();
-            patient.setCustId(rs.getInt("patient_id"));
-            patient.setCustAadhaar(rs.getString("patient_adhaar_number"));
-            patient.setCustHomeAddress(rs.getString("patient_home_address"));
-            patient.setCustName(rs.getString("patient_name"));
-            patient.setCustMobile(rs.getString("patient_mobile_number"));
-            patient.setCustEmail(rs.getString("patient_mail"));
+            patient.setPatientId(rs.getInt("patient_id"));
+            patient.setPatientAadhaar(rs.getString("patient_adhaar_number"));
+            patient.setPatientHomeAddress(rs.getString("patient_home_address"));
+            patient.setPatientName(rs.getString("patient_name"));
+            patient.setPatientMobile(rs.getString("patient_mobile_number"));
+            patient.setPatientEmail(rs.getString("patient_mail"));
             patientList.add(patient);
         }
         return patientList;

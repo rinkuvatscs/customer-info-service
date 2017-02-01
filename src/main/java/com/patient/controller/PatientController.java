@@ -80,7 +80,7 @@ public class PatientController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getpatientById/{custId}")
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getpatientById/{patientId}")
 	@ResponseBody
 	public Patient getPatientByPatientId(@PathVariable String patientId) {
 		if (!StringUtils.isEmpty(patientId)) {
@@ -120,7 +120,7 @@ public class PatientController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/{custId}")
+	@RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/{patientId}")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "delete patient", notes = "delete patient")
 	@ApiResponses(value = {
@@ -137,13 +137,13 @@ public class PatientController {
 					"patientRequest Id should not be blank");
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/deletepatientByAadhar/{custAdharNumber}")
+	@RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/deletepatientByAadhar/{patientAdharNumber}")
 	@ResponseBody
 	public PatientResponse deletePatientByAdharNumber(
-			@PathVariable String custAdharNumber) {
-		if (!StringUtils.isEmpty(custAdharNumber)) {
+			@PathVariable String patientAdharNumber) {
+		if (!StringUtils.isEmpty(patientAdharNumber)) {
 			PatientRequest patientRequest = new PatientRequest();
-			patientRequest.setPatientAadhaar(custAdharNumber);
+			patientRequest.setPatientAadhaar(patientAdharNumber);
 			return new PatientResponse(
 					patientService.deletepatient(patientRequest));
 		} else
@@ -151,13 +151,13 @@ public class PatientController {
 					"patient Aaddhar Number should not be blank");
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/deletepatientByMobile/{custMobileNumber}")
+	@RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/deletepatientByMobile/{patientMobileNumber}")
 	@ResponseBody
 	public PatientResponse deletePatientByMobileNumber(
-			@PathVariable String custMobileNumber) {
-		if (!StringUtils.isEmpty(custMobileNumber)) {
+			@PathVariable String patientMobileNumber) {
+		if (!StringUtils.isEmpty(patientMobileNumber)) {
 			PatientRequest patientRequest = new PatientRequest();
-			patientRequest.setPatientMobile(custMobileNumber);
+			patientRequest.setPatientMobile(patientMobileNumber);
 			return new PatientResponse(
 					patientService.deletepatient(patientRequest));
 		} else
