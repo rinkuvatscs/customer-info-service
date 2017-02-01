@@ -15,13 +15,13 @@ public interface QueryConstants {
 
 	String GET_PATIENT_BY_ID = " SELECT * FROM patient WHERE patient_id = ? ";
 
-	String GET_PATIENT_BY_ADHAR_NUMBER = " SELECT * FROM patient WHERE cust_adhaar_number = ? ";
+	String GET_PATIENT_BY_ADHAR_NUMBER = " SELECT * FROM patient WHERE patient_adhaar_number = ? ";
 	
 	String GET_PATIENT_BY_EMAIL = " SELECT * FROM patient WHERE patient_mail = ? ";	
 
 	String GET_PATIENT_BY_MOBILE_NUMBER = " SELECT * FROM patient WHERE patient_mobile_number = ? ";
 
-	String GET_PATIENT_BY_NAME = " SELECT * FROM patient WHERE cust_name LIKE ? ";
+	String GET_PATIENT_BY_NAME = " SELECT * FROM patient WHERE patient_name LIKE ? ";
 
 	
 	// -----------------------------------------------------------------------------------------------------------

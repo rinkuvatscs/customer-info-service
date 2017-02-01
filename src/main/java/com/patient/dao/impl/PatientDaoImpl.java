@@ -73,7 +73,7 @@ public class PatientDaoImpl implements PatientDao {
         List<String> args = new ArrayList<>();
 
         if (!StringUtils.isEmpty(patient.getPatientAadhaar())) {
-            query.append(" where cust_adhaar_nukm,.........." + "" + "mber = ?");
+            query.append(" where patient_adhaar_number = ?");
             args.add(patient.getPatientAadhaar());
             isAadharExists = true;
         }
@@ -81,9 +81,9 @@ public class PatientDaoImpl implements PatientDao {
         if (!StringUtils.isEmpty(patient.getPatientEmail())) {
 
             if (isAadharExists) {
-                query.append(" or cust_mail = ?");
+                query.append(" or patient_mail = ?");
             } else {
-                query.append(" where cust_mail = ?");
+                query.append(" where patient_mail = ?");
             }
             isEmailExists = true;
             args.add(patient.getPatientEmail());
@@ -92,9 +92,9 @@ public class PatientDaoImpl implements PatientDao {
         if (!StringUtils.isEmpty(patient.getPatientMobile())) {
 
             if (isAadharExists || isEmailExists) {
-                query.append(" or cust_mobile_number = ?");
+                query.append(" or patient_mobile_number = ?");
             } else {
-                query.append(" where cust_mobile_number = ?");
+                query.append(" where patient_mobile_number = ?");
             }
             args.add(patient.getPatientMobile());
         }
@@ -115,10 +115,10 @@ public class PatientDaoImpl implements PatientDao {
         if (!StringUtils.isEmpty(patientRequest)) {
             if (!StringUtils.isEmpty(patientRequest.getPatientId())
                     && getpatientById(patientRequest.getPatientId())
-                            .getCustId() != null) {
+                            .getPatientId() != null) {
                 Object args[] = { patientRequest.getPatientId() };
                 delete = jdbcTemplate.update(
-                        "DELETE FROM patient WHERE cust_id = ? ", args);
+                        "DELETE FROM patient WHERE patient_id = ? ", args);
                 if (delete > 0) {
                     response = "Patient with Patient ID "
                             + patientRequest.getPatientId()
@@ -129,10 +129,10 @@ public class PatientDaoImpl implements PatientDao {
             } else if (!StringUtils.isEmpty(patientRequest.getPatientAadhaar())
                     && getpatientByAdharNumber(
                             patientRequest.getPatientAadhaar())
-                            .getCustAadhaar() != null) {
+                            .getPatientAadhaar() != null) {
                 Object args[] = { patientRequest.getPatientAadhaar() };
                 delete = jdbcTemplate.update(
-                        "DELETE FROM patient WHERE cust_adhaar_number = ? ",
+                        "DELETE FROM patient WHERE patient_adhaar_number = ? ",
                         args);
                 if (delete > 0) {
                     response = "Patient with Aadhar Number "
@@ -143,10 +143,10 @@ public class PatientDaoImpl implements PatientDao {
                 }
             } else if (!StringUtils.isEmpty(patientRequest.getPatientMobile())
                     && getpatientByMobileNumber(
-                            patientRequest.getPatientMobile()).getCustMobile() != null) {
+                            patientRequest.getPatientMobile()).getPatientMobile() != null) {
                 Object args[] = { patientRequest.getPatientMobile() };
                 delete = jdbcTemplate.update(
-                        "DELETE FROM patient WHERE cust_mobile_number = ? ",
+                        "DELETE FROM patient WHERE patient_mobile_number = ? ",
                         args);
                 if (delete > 0) {
                     response = "Patient with Mobile Number "
@@ -224,18 +224,18 @@ public class PatientDaoImpl implements PatientDao {
 
             // Will check only using CustId Here
             if (null != getpatientById(patientRequest.getPatientId())
-                    .getCustAadhaar()) {
+                    .getPatientAadhaar()) {
                 boolean ispatientName = false, isHomeAddress = false, isCustEmail = false;
                 if (null != patientRequest.getPatientName()) {
-                    query.append(" cust_name = ? ");
+                    query.append(" patient_name = ? ");
                     args.add(patientRequest.getPatientName());
                     ispatientName = true;
                 }
                 if (null != patientRequest.getPatientHomeAddress()) {
                     if (ispatientName) {
-                        query.append(" , cust_home_address = ? ");
+                        query.append(" , patient_home_address = ? ");
                     } else {
-                        query.append(" cust_home_address = ? ");
+                        query.append(" patient_home_address = ? ");
                     }
                     args.add(patientRequest.getPatientHomeAddress());
                     isHomeAddress = true;
@@ -244,12 +244,12 @@ public class PatientDaoImpl implements PatientDao {
                 if (null != patientRequest.getPatientEmail()) {
 
                     if (null == getpatientByEmail(
-                            patientRequest.getPatientEmail()).getCustAadhaar()) {
+                            patientRequest.getPatientEmail()).getPatientAadhaar()) {
                         if (isHomeAddress || ispatientName) {
-                            query.append(" , cust_mail = ? ");
+                            query.append(" , patient_mail = ? ");
 
                         } else {
-                            query.append(" cust_mail = ?");
+                            query.append(" patient_mail = ?");
                         }
                         args.add(patientRequest.getPatientEmail());
                         isCustEmail = true;
@@ -262,12 +262,12 @@ public class PatientDaoImpl implements PatientDao {
                 if (null != patientRequest.getPatientMobile()) {
 
                     if (null == getpatientByMobileNumber(
-                            patientRequest.getPatientMobile()).getCustAadhaar()) {
+                            patientRequest.getPatientMobile()).getPatientAadhaar()) {
                         if (isHomeAddress || ispatientName || isCustEmail) {
-                            query.append(" , cust_mobile_number = ? ");
+                            query.append(" , patient_mobile_number = ? ");
 
                         } else {
-                            query.append(" cust_mobile_number = ?");
+                            query.append(" patient_mobile_number = ?");
                         }
                         args.add(patientRequest.getPatientMobile());
                     } else {
@@ -278,7 +278,7 @@ public class PatientDaoImpl implements PatientDao {
 
                 if (ispatientName || isHomeAddress || isCustEmail) {
                     if (null != patientRequest.getPatientId()) {
-                        query.append(" WHERE cust_id = ? ");
+                        query.append(" WHERE patient_id = ? ");
                         args.add(patientRequest.getPatientId());
                     } else {
                         response = "Please Enter data to Update....!!!";

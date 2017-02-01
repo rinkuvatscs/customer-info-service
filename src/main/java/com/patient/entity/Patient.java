@@ -1,66 +1,56 @@
 package com.patient.entity;
 
+
 public class Patient {
-    private Integer custId;
-    private String custName;
-    private String custEmail;
-    private String custAadhaar;
-    private String custMobile;
-    private String custHomeAddress;
 
-    public Integer getCustId() {
-        return custId;
-    }
+    private Integer patientId;
+    private String patientName;
+    private String patientEmail;
+    private String patientAadhaar;
+    private String patientMobile;
+    private String patientHomeAddress;
+	public Integer getPatientId() {
+		return patientId;
+	}
+	public void setPatientId(Integer patientId) {
+		this.patientId = patientId;
+	}
+	public String getPatientName() {
+		return patientName;
+	}
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
+	}
+	public String getPatientEmail() {
+		return patientEmail;
+	}
+	public void setPatientEmail(String patientEmail) {
+		this.patientEmail = patientEmail;
+	}
+	public String getPatientAadhaar() {
+		return patientAadhaar;
+	}
+	public void setPatientAadhaar(String patientAadhaar) {
+		this.patientAadhaar = patientAadhaar;
+	}
+	public String getPatientMobile() {
+		return patientMobile;
+	}
+	public void setPatientMobile(String patientMobile) {
+		this.patientMobile = patientMobile;
+	}
+	public String getPatientHomeAddress() {
+		return patientHomeAddress;
+	}
+	public void setPatientHomeAddress(String patientHomeAddress) {
+		this.patientHomeAddress = patientHomeAddress;
+	}
 
-    public void setCustId(Integer custId) {
-        this.custId = custId;
-    }
-
-    public String getCustName() {
-        return custName;
-    }
-
-    public void setCustName(String custName) {
-        this.custName = custName;
-    }
-
-    public String getCustEmail() {
-        return custEmail;
-    }
-
-    public void setCustEmail(String custEmail) {
-        this.custEmail = custEmail;
-    }
-
-    public String getCustAadhaar() {
-        return custAadhaar;
-    }
-
-    public void setCustAadhaar(String custAadhaar) {
-        this.custAadhaar = custAadhaar;
-    }
-
-    public String getCustMobile() {
-        return custMobile;
-    }
-
-    public void setCustMobile(String custMobile) {
-        this.custMobile = custMobile;
-    }
-
-    public String getCustHomeAddress() {
-        return custHomeAddress;
-    }
-
-    public void setCustHomeAddress(String custHomeAddress) {
-        this.custHomeAddress = custHomeAddress;
-    }
-
+   
     @Override
     public String toString() {
-        return "Customer [custName=" + custName + ", custEmail=" + custEmail
-                + ", custAadhaar=" + custAadhaar + ", custMobile=" + custMobile
-                + ", custHomeAddress=" + custHomeAddress + "]";
+        return "PatientRequest [patientName=" + patientName + ", patientEmail="
+                + patientEmail + ", patientAadhaar=" + patientAadhaar + ", patientMobile="
+                + patientMobile + ", patientHomeAddress=" + patientHomeAddress + "]";
     }
-
 }
