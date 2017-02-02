@@ -98,7 +98,7 @@ public class PatientController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getPatientByEmail/{email}")
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getPatientByEmail/{email:.+}")
 	@ResponseBody
 	public Patient getPatientByEmail(@PathVariable String email) {
 		if (!StringUtils.isEmpty(email)) {
