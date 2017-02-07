@@ -26,7 +26,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
 	String swaggerEnableUrl ;
 	
 	
-	@Value("$(swaggerTitle)")
+	@Value("${swaggerTitle}")
 	String swaggerTitle ;
 	
 	@Value("${swaggerDescription}")
