@@ -35,6 +35,9 @@ public class PatientDaoImpl implements PatientDao {
             args.add(patient.getPatientHomeAddress());
             args.add(patient.getPatientAadhaar());
             args.add(patient.getPatientEmail());
+            args.add(patient.getAge());
+            args.add(patient.getGender());            
+            
             // TODO We can use database date also that will be easy for use
             // using now() function in MYSQL
             LocalDate localDate = LocalDate.now();
