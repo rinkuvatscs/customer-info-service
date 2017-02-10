@@ -5,7 +5,9 @@ public interface QueryConstants {
 	String ADD_PATIENT = "insert into  patient(patient_name,patient_mobile_number,patient_home_address,patient_adhaar_number,"
 			+ "patient_mail,date_of_registered,dob,gender)"
 			+ " values"
-			+ "(?,?,?,?,?,?,?,?)";
+			+ "(?,?,?,?,?,?,"
+			+ "STR_TO_DATE(?, '%d-%m-%Y %r')"
+			+ ",?)";
 
 	String IS_PATIENT_EXIST = "SELECT * FROM patient";
 	

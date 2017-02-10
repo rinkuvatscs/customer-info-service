@@ -35,8 +35,6 @@ public class PatientDaoImpl implements PatientDao {
             args.add(patient.getPatientHomeAddress());
             args.add(patient.getPatientAadhaar());
             args.add(patient.getPatientEmail());
-            args.add("STR_TO_DATE("+patient.getDateOfBirth()+", '%d-%m-%Y %r')");
-            args.add(patient.getGender());            
             
             // TODO We can use database date also that will be easy for use
             // using now() function in MYSQL
@@ -46,6 +44,9 @@ public class PatientDaoImpl implements PatientDao {
                             localDate));
             args.add(DateTimeFormatter.ofPattern("yyyy/MM/dd")
                     .format(localDate));
+            args.add(patient.getDateOfBirth());
+            args.add(patient.getGender());            
+           
 
             int row = jdbcTemplate.update(QueryConstants.ADD_PATIENT,
                     args.toArray());
