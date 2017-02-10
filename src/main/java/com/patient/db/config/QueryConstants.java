@@ -3,7 +3,7 @@ package com.patient.db.config;
 public interface QueryConstants {
 //cust_name varchar(45) default NULL, cust_mobile_number  cust_home_address , cust_adhaar_number cust_mail  date_of_registered status varchar(30) default 'Activate'
 	String ADD_PATIENT = "insert into  patient(patient_name,patient_mobile_number,patient_home_address,patient_adhaar_number,"
-			+ "patient_mail,date_of_registered,age,gender)"
+			+ "patient_mail,date_of_registered,dob,gender)"
 			+ " values"
 			+ "(?,?,?,?,?,?,?,?)";
 

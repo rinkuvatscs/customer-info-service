@@ -35,7 +35,7 @@ public class PatientDaoImpl implements PatientDao {
             args.add(patient.getPatientHomeAddress());
             args.add(patient.getPatientAadhaar());
             args.add(patient.getPatientEmail());
-            args.add(patient.getAge());
+            args.add("STR_TO_DATE("+patient.getDateOfBirth()+", '%d-%m-%Y %r')");
             args.add(patient.getGender());            
             
             // TODO We can use database date also that will be easy for use
