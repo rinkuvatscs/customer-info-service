@@ -3,7 +3,9 @@ package com.patient.dao.impl;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -324,7 +326,11 @@ public class PatientDaoImpl implements PatientDao {
     @Override
     public List<Patient> getpatientByName(String name) {
         if (!StringUtils.isEmpty(name)) {
-            Object args[] = { name };
+            Object args[] = { "%"+name+"%" };
+            
+            Map<String,Object> params = new HashMap<String,Object>();
+            params.put("name", name+"%");
+            
             List<Patient> response = jdbcTemplate.query(
                     QueryConstants.GET_PATIENT_BY_NAME, new PatientExtractor(),
                     args);

@@ -23,8 +23,9 @@ public interface QueryConstants {
 
 	String GET_PATIENT_BY_MOBILE_NUMBER = " SELECT * FROM patient WHERE patient_mobile_number = ? ";
 
-	String GET_PATIENT_BY_NAME = " SELECT * FROM patient WHERE patient_name LIKE ? ";
-
+	String GET_PATIENT_BY_NAME = " SELECT * FROM patient WHERE patient_name LIKE ?";
+	
+	
 	
 	// -----------------------------------------------------------------------------------------------------------
 
